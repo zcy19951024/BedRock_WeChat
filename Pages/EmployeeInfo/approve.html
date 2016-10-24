@@ -1,0 +1,151 @@
+<!--
+	作者：hulijia1209@sina.com
+	时间：2016-09-21
+	描述：
+-->
+<!doctype html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<title></title>		
+		<link href="../../css/mui.min.css" rel="stylesheet" />
+		<script src="../../js/mui.min.js"></script>
+		<style>
+			/*间距div*/
+			.content-padding{
+				height:10px;
+			}
+			/*标题加粗（ps:原生样式上添加）*/
+			.mui-title{
+				font-weight:bold
+			}
+			/*行高及背景颜色 （ps:原生样式上添加）*/
+			.mui-input-row{
+				height: 40px;background-color: #FFFFFF;"
+			}
+			/*姓名、邮箱、住址的文本框提示靠右
+			.content-input-right{
+				text-align:right;
+			}*/
+			
+			/*除姓名、邮箱、住址外文本框靠右、宽度*/
+			#content-input-width{
+				text-align:right;width:50%;
+			}
+			/*.mui-input-row input{
+				width:50%;
+			}*/
+			
+			/*除姓名、邮箱、住址外label文本的宽度
+			.content-label-width{
+				width:50%;
+			}*/
+			.mui-input-row label{
+				width:50%;
+			}
+
+			/*性别男的单选框定位*/
+			#content-sex-nan{
+				position: absolute;right:60px
+			}
+			/*性别女的单选框定位*/
+			#content-sex-nv{
+				position: absolute;right:0px
+			}
+			/*取消按钮的定位，背景颜色，边框颜色，字体颜色*/
+			#buttom-style-cancel{
+				position: absolute; width: 45%;
+				background-color:#EEEEF3;border-color: #66CCFF;color: #66CCFF;
+			}
+			/*确定按钮的定位，背景颜色，边框颜色*/
+			#buttom-style-sure{
+				position: absolute;right: 0px;width:45%
+				background-color:#66CCFF;border-color: #66CCFF;
+			}
+
+		</style>
+			
+			
+		<script type="text/javascript">
+			mui.init()
+			//alert(window.innerHeight)
+		</script>	
+		
+	</head>
+	<body>
+	<header class="mui-bar mui-bar-nav">
+    	<a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
+    <h1 class="mui-title">申请确认</h1>
+	</header>
+	<div class="mui-content">	 
+		<div class="content-padding"></div>
+		<div class="mui-input-row">
+		    <label>姓名：</label>
+		    <input type="text" placeholder="请输入姓名" id="content-input-width"/>
+		</div>
+		<div class="mui-input-row" id="fater-position">
+			<label>性别：</label>
+			<div class="mui-input-row mui-radio mui-left" id="content-sex-nan">
+				<label>男</label>
+				<input name="radio1" type="radio" /> 
+			</div>
+		   <div class="mui-input-row mui-radio mui-left" id="content-sex-nv">
+				<label>女</label>
+				<input name="radio2" type="radio" /> 
+			</div>
+		</div>	
+		<div class="content-padding"></div>		
+		<div class="mui-input-row">
+		    <label>英文名：</label>
+		    <input type="text" placeholder="请输入英文名" id="content-input-width">
+		</div>	
+		<div class="mui-input-row">
+		    <label>邮箱：</label>
+		    <input type="text" placeholder="英文名@bedrock.com" id="content-input-width">
+		</div>		
+		<div class="mui-input-row">
+			    <label>初始密码：</label>
+			    <input type="text" placeholder="请输入密码" id="content-input-width">
+		</div>
+		<div class="content-padding"></div>		
+		<div class="mui-input-row">
+		    <label>出生日期：</label>
+		    <input type="text" placeholder="请输入出生日期" id="content-input-width">
+		</div>
+		<div class="mui-input-row">
+		    <label>住址：</label>
+		    <input type="text" placeholder="请输入住址" id="content-input-width">
+		</div>		
+		<div class="mui-input-row">
+		    <label>联系方式：</label>
+		    <input type="text" placeholder="请输入联系方式" id="content-input-width">
+		</div>				
+		<div class="content-padding"></div>		
+		<div class="mui-input-row">
+		    <label>域帐号：</label>
+		    <input type="text" placeholder="请输入域帐号" id="content-input-width">
+		</div>
+		<div class="mui-input-row">
+		    <label>账号密码：</label>
+		    <input type="text" placeholder="请输入域帐号密码" id="content-input-width">
+		</div>		
+		<div class="mui-input-row">
+		    <label>项目经理：</label>
+		    <input type="text" placeholder="请输入项目经理" id="content-input-width">
+		</div>		
+		<div class="mui-input-row">
+		    <label>备注：</label>
+		    <input type="text" placeholder="请填写备注" id="content-input-width"/>
+		</div>		
+		<div class="content-padding"></div>
+		<div id="fater-position">
+			<button type="button" class="mui-btn mui-btn-blue mui-btn-block" style="background-color:#EEEEF3;border-color: #66CCFF;color: #66CCFF;position: absolute; width: 45%;">取消</button>
+			<button type="button" class="mui-btn mui-btn-blue mui-btn-block" style="background-color:#66CCFF;border-color: #66CCFF;position: absolute;right: 0px;width:45%">确认</button>
+		</div>
+		<!--<button type="button" class="mui-btn mui-btn-blue mui-btn-block" style="background-color:#66CCFF;border-color: #66CCFF; margin-top: 10px;">同意</button>		
+		<button type="button" class="mui-btn mui-btn-blue mui-btn-block" style="background-color:#EEEEF3;border-color: #66CCFF; margin-top: 10px;color: #66CCFF;">拒绝</button>
+	-->	</div>	
+	</body>
+
+</html>

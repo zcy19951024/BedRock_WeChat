@@ -1,0 +1,136 @@
+<!doctype html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<link href="../../css/mui.min.css" rel="stylesheet" />
+		<style>
+			p{
+				font-size: 14px;
+    			margin-bottom: 5px;
+    			color: #8f8f94;
+			}
+			h4{
+				color: #222222;
+			}
+		</style>
+	</head>
+	<body>
+		<div class="mui-content" id="content">
+            <!--<div class="mui-input-row mui-checkbox mui-left">  
+            	<div class="content-padding"></div>
+	                <div class="content-outtable">
+	                	<h4>K2学习1</h4>
+	                	<p>负责人：<span>张三</span></p>
+	                	<p>项目经理：<span>李四</span></p>
+	                	<p>建议学习周期：<span>两周</span></p>
+	                	<input name="checkbox"  type="checkbox"  style="margin-top: 6%;margin-left: 20%">   
+	            	<input type="text" value="1" hidden="hidden" />
+	                </div> 
+                </div>  
+            
+            <div class="mui-input-row mui-checkbox mui-left">  
+            	<div class="content-padding"></div>
+                <div class="content-outtable">
+                	<h4>K2学习2</h4>
+                	<p>负责人：<span>张三</span></p>
+                	<p>项目经理：<span>李四</span></p>
+                	<p>建议学习周期：<span>两周</span></p>
+                	<input name="checkbox"  type="checkbox"  style="margin-top: 6%;margin-left: 20%;">   
+            	<input type="text" value="2" hidden="hidden" />
+                </div> 
+            </div>             -->
+			    
+		</div>
+		<div class="mui-button-row">
+			<div class="content-padding"></div>
+				<button type="button" class="mui-btn mui-btn-blue mui-btn-block buttom" id="btnAdd" >添加</button>  
+		</div>
+		<script src="../../js/mui.min.js"></script>
+		<script type="text/javascript">
+			mui.init();
+			
+		
+			    
+			//绑定学习课程
+			(function($){
+              var thisURL = window.location.search;
+				var  Code =thisURL.split('?')[1];  
+                var Jobnumber= Code.split("=")[1]; 
+            
+				mui.getJSON('http://localhost/Bedrock_WeCath_WeiXin/api/StudyCourse',{Jobnumber:Jobnumber},function(data){
+					if(data ==""){
+						
+						mui.alert("没有新的课程！");
+					}
+					 mui.each(data,function(index,item){
+					 	
+					 	document.getElementById("content").innerHTML +="<div class='mui-input-row mui-checkbox mui-left'> <div class='content-padding'></div><div class='content-outtable'><h4>"+item.CourseTitle+"</h4><p>负责人：<span>"+item.CoursePrincipal+"</span></p><p>项目经理：<span>"+item.CoursePM+"</span></p><p>建议学习周期：<span>"+item.CourseFinishTime+"周</span></p><input name='checkbox'  type='checkbox'  style='margin-top: 6%;margin-left: 20%'> <input type='text' value="+item.CourseCode+" hidden='hidden' /></div> </div>";
+
+					 });
+					 
+				});
+				
+			})(mui);
+			
+			//添加学习课程计划
+			mui(".mui-button-row").on('tap','#btnAdd',function(){
+		
+			var checked= true;
+			var succ =false;
+			var array=[];
+			    mui("#content .content-outtable").each(function(){
+			    		
+			    	 var s = this.getElementsByTagName("input").item(0).checked;
+			    	 if(s){
+			    	 	checked=false;
+			    	 	var CourseCode =this.getElementsByTagName("input").item(1).value;
+			    	 	
+			    	 }
+			    	array.push({
+			    	 			Emp_Id:1,
+			    	 			CourseCode:CourseCode,
+			    	 			Jobnumber:1
+			    	 		});
+			    });
+			    mui.ajax('http://localhost/Bedrock_WeCath_WeiXin/api/StudyDetail',{
+			    	 		data:array,
+			    	 		dataType:'text',//服务器返回json格式数据
+							type:'post',//HTTP请求类型
+							timeout:5000,//超时时间设置为10秒；
+							headers:{'Content-Type':'application/json'},	              
+							success:function(data){
+								succ=true;
+								mui.alert(data);
+								
+								mui.later(function() {
+							 mui.openWindow({
+                         		 url: 'AddCourse.html', 
+   								 id:'AddCourse'
+  								});
+						}, 1000);
+								
+							},
+							error:function(xhr,type,errorThrown){
+							//异常处理；
+							console.log(type);
+							mui.confirm(errorThrown);
+							}
+			    	 		
+			    	 	});
+			    if(checked){
+			    	mui.alert("请选择课程！");
+			    	return;
+			    };
+			    
+			    
+			});
+			mui(".mui-bar mui-bar-nav headerbar").on('tap','.mui-icon mui-icon-left-nav mui-pull-left',function(){
+			 
+				console.log("backParent");
+			});
+		</script>
+	</body>
+
+</html>

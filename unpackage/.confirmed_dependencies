@@ -1,0 +1,36 @@
+{
+  "index.html": {
+    "resources": [
+      "js/mui.min.js",
+      "css/mui.min.css",
+      "fonts/mui.ttf",
+      "images/bedrock-logo.png",
+      "images/zhanghushenqing.png",
+      "images/xuexijihua.png",
+      "images/ruzhi.png",
+      "images/gongshi.png",
+      "Pages/EmployeeInfo/entry.html",
+      "Pages/EmployeeInfo/account.html"
+    ],
+    "refer": [
+      "Pages/EmployeeInfo/entry.html",
+      "Pages/EmployeeInfo/account.html"
+    ]
+  },
+  "Pages/EmployeeInfo/entry.html": {
+    "resources": [
+      "index.html"
+    ],
+    "refer": [
+      "index.html"
+    ]
+  },
+  "Pages/EmployeeInfo/account.html": {
+    "resources": [
+      "index.html"
+    ],
+    "refer": [
+      "index.html"
+    ]
+  }
+}

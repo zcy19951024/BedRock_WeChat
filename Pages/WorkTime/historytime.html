@@ -1,0 +1,128 @@
+<!doctype html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<link href="../../css/mui.min.css" rel="stylesheet" />
+		<link rel="stylesheet" type="text/css" href="../../css/mui.picker.min.css" />
+		<script src="../../js/mui.min.js"></script>
+		<script type="text/javascript" src="../../js/mui.picker.min.js" ></script>
+		<script type="text/javascript">
+			mui.init()
+			(function($) {
+				$.init();
+				//起始时间
+				var resultStart = $('#resultStart')[0];
+				var btns = $('.btnStart');
+				btns.each(function(i, btn) {
+					btn.addEventListener('tap', function() {
+						var optionsJson = this.getAttribute('data-options') || '{}';
+						var options = JSON.parse(optionsJson);
+						var id = this.getAttribute('id');
+						/*
+						 * 首次显示时实例化组件
+						 * 示例为了简洁，将 options 放在了按钮的 dom 上
+						 * 也可以直接通过代码声明 optinos 用于实例化 DtPicker
+						 */
+						var picker = new $.DtPicker(options);
+						picker.show(function(rs) {
+							/*
+							 * rs.value 拼合后的 value
+							 * rs.text 拼合后的 text
+							 * rs.y 年，可以通过 rs.y.vaue 和 rs.y.text 获取值和文本
+							 * rs.m 月，用法同年
+							 * rs.d 日，用法同年
+							 * rs.h 时，用法同年
+							 * rs.i 分（minutes 的第二个字母），用法同年
+							 */
+							resultStart.value =rs.value;
+							/* 
+							 * 返回 false 可以阻止选择框的关闭
+							 * return false;
+							 */
+							/*
+							 * 释放组件资源，释放后将将不能再操作组件
+							 * 通常情况下，不需要示放组件，new DtPicker(options) 后，可以一直使用。
+							 * 当前示例，因为内容较多，如不进行资原释放，在某些设备上会较慢。
+							 * 所以每次用完便立即调用 dispose 进行释放，下次用时再创建新实例。
+							 */
+							picker.dispose();
+						});
+					}, false);
+				});
+			//截至时间
+			var resultEnd=$('#resultEnd')[0];
+			var btne=$('.btnEnd');
+			btne.each(function(i, btne) {
+				btne.addEventListener('tap', function() {
+					var optionsJson = this.getAttribute('data-options') || '{}';
+					var options = JSON.parse(optionsJson);
+					var id = this.getAttribute('id');var picker = new $.DtPicker(options);
+					picker.show(function(rs) {
+						resultEnd.value =rs.value;
+						picker.dispose();
+					var s =document.getElementById('resultStart').value;
+					var e =document.getElementById('resultEnd').value;
+					var html=" ";
+					var num="2";
+					mui.getJSON('http://localhost/Bedrock_WeCath_WeiXin/api/work/'+num,{startDate:s,endDate:e},function(data){
+				        
+				    if(data=="")
+					 	{
+					 		mui.alert("查询结果为空!");
+					 		document.getElementById('WorkList').innerHTML =html;
+					 		return;
+					 	};
+					 document.getElementById('WorkList').innerHTML =html;
+					 mui.each(data,function(index,items){
+					 	
+					 	var ul="";
+					 	mui.each(items,function(index,item){
+					 	    ul +="<li class='mui-table-view-cell'>"+item.ProjectName+"<span class='mui-badge mui-badge-success'>"+item.WorkDate+"小时</span></li>"
+					 	});
+					 	document.getElementById('WorkList').innerHTML +="<li class='mui-table-view-cell mui-collapse'><a class='mui-navigate-right' href='#'>"+items[0].Date.substring(0,10)+"</a><ul class='mui-table-view mui-table-view-chevron'>"+ul+"</ul></li>";
+					 });
+					
+						});
+					});
+				}, false);
+			});
+		})(mui);				
+		
+		</script>
+	</head>
+	<body>
+		<header class="mui-bar mui-bar-nav">
+		    <a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
+		    <h1 class="mui-title">查看历史工时</h1>
+		</header>
+		<div class="mui-content">
+			<div class="mui-input-row">
+				<div class="content-padding"></div>
+				<div class="worktime-outtable" style="position: relative;">
+					<input type="text" placeholder="输入起始时间" style="width: 47%;" data-options='{"type":"date","beginYear":2014,"endYear":2016}' id='resultStart' class="btnStart" />
+					
+					<input type="text" placeholder="输入截至时间" style="width: 47%;position: absolute;right: 0px;" data-options='{"type":"date","beginYear":2014,"endYear":2016}' id='resultEnd' class="btnEnd"/>
+				</div>
+				
+			</div>							
+		</div>
+		    
+		    <ul id="WorkList" class="mui-table-view mui-table-view-chevron">
+		       
+		        <li class="mui-table-view-cell mui-collapse">
+		            <a class="mui-navigate-right" href="#">日期</a>
+		           <ul class="mui-table-view mui-table-view-chevron">
+						 <li class="mui-table-view-cell">项目名称
+	                      	<span class="mui-badge mui-badge-success">工时</span>
+           	            </li>
+						
+					</ul>
+		        </li>
+		    </ul>
+	</div>
+	</body>
+
+</html>

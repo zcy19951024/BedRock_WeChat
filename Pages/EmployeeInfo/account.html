@@ -1,0 +1,151 @@
+<!--
+	作者：hulijia1209@sina.com
+	时间：2016-09-21
+	描述：
+--><!doctype html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<title></title>
+		<link href="../../css/mui.min.css" rel="stylesheet" />
+		<script src="../../js/mui.min.js"></script>
+		<style>
+			/*间距div*/
+			.content-padding{
+				height: 10px;
+			}
+			/*标题字体加粗（ps：在原生样式上添加）*/
+			.mui-title{
+				font-weight:bold
+			}
+			/*性别单选框父容器的相对定位*/
+			.content-styleborder{
+				position: relative;
+			}
+			/*性别男的单选框定位*/
+			#content-input-radio-nan{
+				position: absolute;right:60px
+			}
+			/*性别女的单选框定位*/
+			#content-input-radio-nv{
+				position: absolute;right:0px
+			}
+			/*行高及背景（ps:在原生样式上添加）*/
+			.mui-input-row{
+				height: 50px;background-color: #FFFFFF;
+			}
+			/*文本标题的宽度*/
+			#content-label-title{
+				width: 50%;
+			}
+			/*文本框的宽度*/
+			#content-input-Cname,#content-input-Ename,#content-input-brithday,#content-input-tel,#content-input-pwd{
+				text-align:right;width: 50%;
+			}
+			/*文本框提示文字向右*/
+			#content-input-email,#content-input-pwd,#content-input-address{
+				text-align:right;
+			}
+			/*按钮的样式*/
+			#buttom{
+				background-color:#66CCFF;border-color: #66CCFF;
+			}
+		</style>
+			
+		<script type="text/javascript">
+			mui.init()
+			function accountOK(){
+				var Cname=document.getElementById("content-input-Cname").value;
+				var sex=document.getElementsByName("radio1").value;
+				var Ename=document.getElementById("content-input-Ename").value;
+				var email=document.getElementById("content-input-email").value;
+				var pwd=document.getElementById("content-input-pwd").value;
+				var brithday=document.getElementById("content-input-brithday").value;
+				var address=document.getElementById("content-input-address").value;
+				var tel=document.getElementById("content-input-tel").value;
+				
+				mui.ajax('http://localhost/api/Entry/15',{
+				data:{
+					"CName":Cname,
+					"Sex":sex,
+					"EName":Ename,
+					"Email":email,
+					"Password":pwd,
+					"Birthday":brithday,
+					"Address":address,
+					"Phone":tel,
+				},
+				dataType:'json',//服务器返回json格式数据
+				type:'POST',//HTTP请求类型
+				timeout:10000,//超时时间设置为10秒；
+				headers:{'Content-Type':'application/json'},	              
+				success:function(data){
+						alert(JSON.stringify(data)); 
+						alert("添加成功！");
+				    },
+		        error:function(xhr,type,errorThrown){
+		            //异常处理；
+		            console.log(type);
+		        }
+			});					
+			}
+			
+		</script>		
+	</head>
+	<body>
+	<header class="mui-bar mui-bar-nav">
+    	<a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
+    <h1 class="mui-title" style="">账户申请</h1>
+	</header>
+	<div class="mui-content">
+		<div class="content-padding"></div>
+		<div class="mui-input-row">
+		    <label id="content-label-title">姓名：</label>
+		    <input type="text" placeholder="请输入姓名" id="content-input-Cname">
+		</div>
+		<div class="mui-input-row">
+			<div class="content-styleborder">
+				<label>性别：</label>
+				<div class="mui-input-row mui-radio mui-left" id="content-input-radio-nan">
+					<label>男</label>
+					<input name="radio1" type="radio"> 
+				</div>
+			   <div class="mui-input-row mui-radio mui-left" id="content-input-radio-nv">
+					<label>女</label>
+					<input name="radio1" type="radio"> 
+				</div>
+			</div>
+		</div>			
+		<div class="content-padding"></div>		
+		<div class="mui-input-row">
+		    <label id="content-label-title">英文名：</label>
+		    <input type="text" placeholder="请输入英文名" id="content-input-Ename">
+		</div>	
+		<div class="mui-input-row">
+		    <label>邮箱：</label>
+		    <input type="text" placeholder="英文名@bedrock.com" id="content-input-email">
+		</div>		
+		<div class="mui-input-row">
+		    <label id="content-label-title">初始密码：</label>
+		    <input type="text" placeholder="请输入密码" id="content-input-pwd">
+		</div>
+		<div class="content-padding"></div>		
+		<div class="mui-input-row">
+		    <label id="content-label-title">出生日期：</label>
+		    <input type="text" placeholder="请输入出生日期" id="content-input-brithday">
+		</div>
+		<div class="mui-input-row">
+		    <label>住址：</label>
+		    <input type="text" placeholder="请输入住址" id="content-input-address">
+		</div>		
+		<div class="mui-input-row">
+		    <label id="content-label-title">联系方式：</label>
+		    <input type="text" placeholder="请输入联系方式" id="content-input-tel">
+		</div>		
+		<div class="content-padding"></div>
+		<button type="button" class="mui-btn mui-btn-blue mui-btn-block" id="buttom" onclick="accountOK()">确定</button>
+	</div>		
+	</body>
+</html>

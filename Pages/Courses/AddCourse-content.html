@@ -1,0 +1,65 @@
+<!doctype html>
+<html>
+<head>
+	<meta charset="UTF-8">
+	<title></title>
+	<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+	<link href="../../css/mui.min.css" rel="stylesheet" />
+</head>
+<body>
+	<div class="mui-content" id="content">
+	    <!--<div class="mui-input-row">
+	    	<div class="content-padding"></div>
+	    	
+	    	<div class="content-outtable">
+	    		<a href="CourseInfo.html">
+			    	<h4>K2学习</h4>
+	            	<p>负责人：<span>张三</span></p>
+	            	<p>项目经理：<span>李四</span></p>
+	            	<p>建议学习周期：<span>两周</span></p>
+	            </a>	
+        	</div>
+	    </div>
+	    <div class="mui-input-row">
+	    	<div class="content-padding"></div>
+	    	<div class="content-outtable">
+	    		<a href="CourseInfo.html">
+			    	<h4>框架学习</h4>
+	            	<p>负责人：<span>张三</span></p>
+	            	<p>项目经理：<span>李四</span></p>
+	            	<p>建议学习周期：<span>两周</span></p>
+            	 </a>
+        	</div>
+	    </div>	-->
+	    
+	</div>	
+	<div class="content-padding"></div>
+	<a id="Addhref" ><img src="../../images/addWORK1.png" id="imgAdd" style="margin-left: 42%;" /></a>
+	<script src="../../js/mui.min.js"></script>
+	<script type="text/javascript">
+		mui.init();
+       mui.ready(function(){
+       	(function($){
+       		var jobnum=1;
+       	  document.getElementById('Addhref').setAttribute("href","ChoseCourse-content.html?Jobnumber="+jobnum);
+       	 
+       		
+        	
+        	mui.getJSON('http://localhost/Bedrock_WeCath_WeiXin/api/StudyCourse/2',{Jobnumber:jobnum},function(data){
+		         mui.each(data,function(index,item){
+		         	
+		             document.getElementById('content').innerHTML +="<div class='mui-input-row'><div class='content-padding'></div><div class='content-outtable'><a href='CourseInfo.html?CourseCode="+item[0].CourseCode+"&Jobnumber="+jobnum+"'><h4>"+item[0].CourseTitle+"("+item[0].State+")</h4><p>负责人：<span>"+item[0].CoursePrincipal+"</span></p><p>项目经理：<span>"+item[0].CoursePM+"</span></p><p>预期完成时间：<span>"+item[0].CourseFinishTime+"</span></p></a></div></div>";     
+		 
+		         	
+		         });
+		 
+				});
+        })(mui);
+       });
+//			mui(".mui-table-view").on('tap','#imgAdd',function(){
+//				console.log(1);
+//			})
+	</script>
+</body>
+
+</html>

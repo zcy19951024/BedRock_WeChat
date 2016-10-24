@@ -1,0 +1,50 @@
+<header class="mui-bar mui-bar-nav">
+    <a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
+    <h1 class="mui-title">hello</h1>
+</header>
+<div class="mui-content">
+    <div style="padding:15px;">
+        <button id='pickDateBtn' type="button" class="mui-btn">XAUN</button>
+    </div>
+    <div style="padding:15px;">
+        <button id='pickTimeBtn' type="button" class="mui-btn">TIME</button>
+    </div>
+</div>
+<script type="text/javascript">
+document.getElementById("pickDateBtn").addEventListener('tap', function() {
+    var dDate = new Date();
+    //设置当前日期（不设置默认当前日期）
+    dDate.setFullYear(2016, 7, 16);
+    var minDate = new Date();
+    //最小时间
+    minDate.setFullYear(2010, 0, 1);
+    var maxDate = new Date();
+    //最大时间
+    maxDate.setFullYear(2016, 11, 31);
+    plus.nativeUI.pickDate(function(e) {
+        var d = e.date;
+        mui.toast('您选择的日期是:' + d.getFullYear() + "-" + (d.getMonth() + 1) + "-" + d.getDate());
+    }, function(e) {
+        mui.toast("您没有选择日期");
+    }, {
+        title: '请选择日期',
+        date: dDate,
+        minDate: minDate,
+        maxDate: maxDate
+    });
+});
+document.getElementById("pickTimeBtn").addEventListener('tap', function() {
+    var dTime = new Date();
+    //设置默认时间
+    dTime.setHours(6, 0);
+    plus.nativeUI.pickTime(function(e) {
+        var d = e.date;
+        mui.toast("您选择的时间是：" + d.getHours() + ":" + d.getMinutes());
+    }, function(e) {
+        mui.toast("您没有选择时间");
+    }, {
+        title: "请选择时间",
+        is24Hour: true,
+        time: dTime
+    });
+});

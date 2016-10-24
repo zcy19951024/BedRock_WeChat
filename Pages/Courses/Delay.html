@@ -1,0 +1,130 @@
+<!doctype html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<link href="../../css/mui.min.css" rel="stylesheet" />
+		    <link rel="stylesheet" type="text/css" href="../../css/mui.picker.min.css" />
+	</head>
+
+	<body>
+		<script src="../../js/mui.min.js"></script>
+		<script type="text/javascript" src="../../js/mui.picker.min.js" ></script>
+		<script type="text/javascript">
+			
+			mui.init()
+				(function($){
+				$.init();
+				//初始化时间控件
+			var resultStart = $('#resultStart')[0];
+		    var btns = $('.btnStart');
+		    btns.each(function(i,btn){
+		    	btn.addEventListener('tap',function(){
+		    		var optionsJson =this.getAttribute('data-options') || '{}';
+		    		var options =JSON.parse(optionsJson);
+		    		var id =this.getAttribute('id');
+		    		var picker = new $.DtPicker(options);
+		    		
+		    		picker.show(function(rs){
+		    			resultStart.value =rs.value;
+		    			picker.dispose();
+		    		});
+		    	},false);
+		    });
+		    	//截至时间
+			var resultEnd=$('#resultEnd')[0];
+			var btne=$('.btnEnd');
+			btne.each(function(i, btne) {
+				btne.addEventListener('tap', function() {
+					var optionsJson = this.getAttribute('data-options') || '{}';
+					var options = JSON.parse(optionsJson);
+					var id = this.getAttribute('id');var picker = new $.DtPicker(options);
+					picker.show(function(rs) {
+						resultEnd.value =rs.value;
+						picker.dispose();
+					});
+				}, false);
+			});
+			})(mui);
+		  function StopStudy(){
+		    var thisURL = window.location.search;
+			var  parameter=thisURL.split('?')[1];  
+            var code= parameter.split('&')[0].split('=')[1];
+            var Jobnumber =parameter.split('&')[1].split('=')[1];
+		  	var DelayDay = document.getElementById('DelayDay').value;
+		  
+		  	var reason =document.getElementById('reason').value;
+		  
+		  mui.ajax('http://localhost/Bedrock_WeCath_WeiXin/api/StudyDetail/3',{
+		                
+					data:{
+						"Jobnumber":Jobnumber,
+						 "CourseCode":code,
+						  "DeferTime":DelayDay,
+						  
+						  "DeferReason":reason
+					},
+					dataType:'text',
+					type:'post',
+					timeout:10000,
+					headers:{'Content-Type':'application/json'},	
+					success:function(data){
+						mui.alert(data);
+							mui.later(function() {
+									 mui.openWindow({
+                         		url: 'CourseInfo.html?CourseCode='+code+"&Jobnumber="+Jobnumber, 
+   								 id:'CourseInfo'
+  								});
+								}, 1000);
+						
+					},
+					error:function(xhr,type,errorThrown){
+						//alert(errorThrown);
+						//异常处理；
+						console.log(errorThrown);
+					}
+					
+				});
+		  }
+		</script>
+		<header class="mui-bar mui-bar-nav">
+		    <a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
+		    <h1 class="mui-title">延后学习</h1>
+		</header>
+		<div class="mui-content">
+	 	
+	  <form class="mui-input-group">
+	    <!--<div class="mui-input-row">
+	        <label>开始时间</label>
+	       <input type="text" placeholder="选择开始时间" style="width: 47%;margin-left:20px;" data-options='{"type":"date","beginYear":2014,"endYear":2016}' id='resultStart' class="btnStart" />
+	    </div>
+	     <div class="mui-input-row">
+	        <label>结束时间</label>
+	       <input type="text" placeholder="选择结束时间" style="width: 47%;margin-left:20px;" data-options='{"type":"date","beginYear":2014,"endYear":2016}' id='resultEnd' class="btnEnd" />
+	    </div>-->
+	      <div class="mui-input-row">
+	        <label>延后时间</label>
+	       <div class="mui-numbox" data-numbox-step='5' data-numbox-min='0' data-numbox-max='100'>
+ 					 <button class="mui-btn mui-numbox-btn-minus" type="button">-</button>
+  					 <input id="DelayDay" class="mui-numbox-input" type="number" />
+  					 <button class="mui-btn mui-numbox-btn-plus" type="button">+</button>
+			
+	       </div>
+					
+	    </div>
+	     <div class="mui-input-row" style="height: 100px;">
+	        <label>延后原因</label>
+	        <!--<textarea name='feedback' id="reason"  style="width: 47%;margin-left:20px;"   rows='10' cols='80'></textarea>-->
+	    <textarea id="reason" rows="5" placeholder="请在此处填写原因"></textarea>
+	     </div>
+	     <div class="mui-button-row">
+        <button type="button" class="mui-btn mui-btn-primary" onclick="StopStudy()">确认</button>
+      
+        </div>
+	  </form>
+	</div>
+	</body>
+
+</html>

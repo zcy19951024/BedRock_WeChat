@@ -1,0 +1,41 @@
+
+@font-face {font-family: "iconfont";
+  src: url('../fonts/iconfont.ttf') format('truetype')
+}
+
+.iconfont {
+  font-family:"iconfont" !important;
+  font-size:16px;
+  font-style:normal;
+  -webkit-font-smoothing: antialiased;
+  -webkit-text-stroke-width: 0.2px;
+  -moz-osx-font-smoothing: grayscale;
+}
+.icon-tileoutgoingpay:before { content: "\e600"; }
+.icon-weixiufenxi:before { content: "\e601"; }
+.icon-shoucang:before { content: "\e602"; }
+.icon-ico12:before { content: "\e61a"; }
+.icon-add:before { content: "\e603"; }
+.icon-xx:before { content: "\e604"; }
+.icon-wo:before { content: "\e605"; }
+.icon-zan:before { content: "\e606"; }
+.icon-building:before { content: "\e615"; }
+.icon-location:before { content: "\e607"; }
+.icon-zanxuanzhong:before { content: "\e608"; }
+.icon-phone:before { content: "\e609"; }
+.icon-iconfontshequ:before { content: "\e60a"; }
+.icon-xiaoxi:before { content: "\e60b"; }
+.icon-icon6:before { content: "\e61b"; }
+.icon-back:before { content: "\e60c"; }
+.icon-dianpuguanli:before { content: "\e60d"; }
+.icon-share:before { content: "\e60e"; }
+.icon-house:before { content: "\e617"; }
+.icon-iconfontcomment:before { content: "\e60f"; }
+.icon-comment:before { content: "\e610"; }
+.icon-message:before { content: "\e611"; }
+.icon-time:before { content: "\e612"; }
+.icon-wodetousujianyi:before { content: "\e613"; }
+.icon-wbdiconhobbyrepair:before { content: "\e618"; }
+.icon-shouye:before { content: "\e614"; }
+.icon-electrical:before { content: "\e619"; }
+.icon-card:before { content: "\e616"; }

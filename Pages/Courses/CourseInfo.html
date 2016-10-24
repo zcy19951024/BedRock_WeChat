@@ -1,0 +1,419 @@
+<!doctype html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<link href="../../css/mui.min.css" rel="stylesheet" />
+		<style>	
+		.mui-segmented-control {
+    		font-size: 15px;
+    		font-weight: 400;
+    		position: relative;
+    		display: table;
+    		overflow: hidden;
+    		width: 100%;
+    		table-layout: fixed;
+    		border: 0px solid #000000;
+    		border-radius: 3px;
+    		background-color: transparent;
+    		-webkit-touch-callout: none;
+		}
+		.mui-segmented-control .mui-control-item.mui-active {
+    		color: #000000;
+    		background-color: #D8D8D8;
+		}
+		.mui-segmented-control .mui-control-item {
+    		line-height: 38px;
+    		display: table-cell;
+    		overflow: hidden;
+    		width: 1%;
+    		-webkit-transition: background-color .1s linear;
+    		transition: background-color .1s linear;
+    		text-align: center;
+    		white-space: nowrap;
+    		text-overflow: ellipsis;
+    		color: #000000;
+    		border-color: #000000;
+    		border-left: 1px solid #D8D8D8;
+		}
+
+		.mui-table-view-cell:after {
+    		position: absolute;
+    		right: 0;
+    		bottom: 0;
+    		left: 15px;
+    		height: 0px;
+    		content: '';
+    		-webkit-transform: scaleY(.5);
+    		transform: scaleY(.5);
+    		background-color: #c8c7cc;
+		}
+		input[type=text]{
+			border: none;
+		}
+		</style>
+	</head>
+
+	<body>
+		
+			<div class="mui-table-view">
+				<div id="backImage" style="background-image: url(../../images/K2.jpg);background-repeat: repeat; height: 260px;">
+				</div>
+				<div class="mui-segmented-control">
+			    	<a class="mui-control-item mui-active" id="btnOne" href="#item1">课程内容</a>
+			    	<a class="mui-control-item" href="#item2" id="btnTwo">详情</a>
+			    	<a class="mui-control-item" href="#item2" id="btnThree">相关课程</a>
+				</div>
+				<div id="divOne" style="height: 355px;">
+					<ul class="mui-table-view" id="Content">
+	    				<!--<li class="mui-table-view-cell">
+	    					<div class="mui-input-row mui-checkbox mui-left" >  
+	                			<div class="mui-media-body" style="margin-left: 15%;">
+	                				<input type="text" name="Stydy1" id="Stydy1" value="学习内容一(建议1天完成)" class="test" />
+	            				</div> 
+	                			<input name="checkbox" type="checkbox">  
+	            			</div>
+	    				</li>
+	    				<li class="mui-table-view-cell" >
+	    					<div class="mui-input-row mui-checkbox mui-left" >  
+	                			<div class="mui-media-body" style="margin-left: 15%;">
+	                				<input type="text" name="Stydy1" id="Stydy1" value="学习内容二(建议1天完成)" class="test" />
+	            				</div> 
+	                			<input name="checkbox" type="checkbox">  
+	            			</div>
+	    				</li>-->
+	   					<!--<li class="mui-table-view-cell">
+	   						<div class="mui-input-row mui-checkbox mui-left" >  
+	                			<div class="mui-media-body" style="margin-left: 15%;">
+	                				<input type="text" name="Stydy1" id="Stydy1" value="学习内容三(建议1天完成)" class="test" />
+	            				</div> 
+	                			<input name="checkbox" type="checkbox">  
+	            			</div>
+	   					</li>-->
+					</ul>
+			  		<div id="divStart"  class="mui-table-view" style=" text-align: center;height: 55px;">
+					<button class="mui-btn mui-btn-primary" style="width: 90%;margin-top: 10px;background-color:#66CCFF" onclick="StartStudy()">开始学习</button>
+					</div>
+				    <div id="divButton"  class="mui-table-view" style="text-align: center;height: 55px;">
+				    	<button id="btnFinish"  class="mui-btn mui-btn-primary" style="width: auto;margin-top: 10px;background-color:#66CCFF" onclick="finishStudy()">完成学习</button>
+				    <!--</div>
+					<div id="divSuspend"  class="mui-table-view" style="text-align: center;height: 55px;display: none;">-->
+						
+						<button id="btnSuspend" class="mui-btn mui-btn-primary" style="width: auto;margin-top: 10px;background-color:#66CCFF" onclick="StopStudy()">暂停学习</button>
+					
+					<!--</div>
+					<div id="divDelay"  class="mui-table-view" style="text-align: center;height: 55px;display: none;">-->
+					
+						<button id="btnDelayed" class="mui-btn mui-btn-primary" style="width: auto;margin-top: 10px;background-color:#66CCFF" onclick="DelayStudy()">延后学习</button>
+					
+						<button id="btnCancelSus" class="mui-btn mui-btn-primary" style="width: auto;margin-top: 10px;background-color:#66CCFF" onclick="StopCancel()">取消暂停</button>
+						<!--<button id="btnCancelDel" class="mui-btn mui-btn-primary"  style="width: auto;margin-top: 10px;background-color:#66CCFF" onclick="DelayCancel()">取消延后</button>-->
+					</div>
+				</div>
+				<div id="divTwo" style="display: none;">
+					<!--<span >
+					K2 blackpearl是基于微软.net技术平台研发的BPM产品，是全球第一款基于微软WWF技术构建的遵循WFMC标准的.net平台BPM产品。<br>
+					K2 blackpearl是基于微软.net技术平台研发的BPM产品	
+					</span>-->
+				</div>
+				<div id="divThree" style="display: none;">
+					K2 blackpearl是基于微软.net技术平台研发的BPM产品，是全球第一款基于微软WWF技术构建的遵循WFMC标准的.net平台BPM产品。<br>
+				</div>
+				
+			</div>
+		<script src="../../js/mui.min.js"></script>
+		<script type="text/javascript">
+			mui.init(
+				
+			);
+			
+			window.onload = function(){
+  
+  					
+  					mui.plusReady(function(){
+    					//关闭等待框
+   					 plus.nativeUI.closeWaiting();
+   					 //显示当前页面
+   					 mui.currentWebview.show();
+   					 alert("");
+  					});
+				}
+			
+			
+			mui.ready(function(){
+			
+				var thisURL = window.location.search;
+				var  parameter=thisURL.split('?')[1];  
+                var code= parameter.split('&')[0];
+                var CourseCode =code.split('=')[1];
+                  var Jobnumber =parameter.split('&')[1].split('=')[1];
+                 
+                  //加载课程详情
+                mui.getJSON('http://localhost/Bedrock_WeCath_WeiXin/api/CourseContent',{CourseCode:CourseCode},function(data){
+                	
+                	document.getElementById('divTwo').innerHTML = "<span>"+data.CourseDesc+"</span>";
+                	document.getElementById('backImage').setAttribute("style","background-image: url("+data.Courseimages+");background-repeat: repeat; height: 260px;");
+                });
+                
+                //加载课程内容
+                mui.getJSON('http://localhost/Bedrock_WeCath_WeiXin/api/CourseContent/1',{CourseCode:CourseCode},function(data){
+                	var Content =data.Content.split('/');
+                	mui.each(Content,function(index,item){
+                		
+                		document.getElementById('Content').innerHTML +="<li class='mui-table-view-cell'><div class='mui-input-row mui-checkbox mui-left' >  <div class='mui-media-body' style='margin-left: 15%;'><input type='text' name='Stydy1' id='Stydy1' value='"+item+"' class='test' /></div><input name='checkbox' type='checkbox'></div></li>";
+                		
+                		
+                	});
+                	
+                });
+                //获取学习状态
+              mui.getJSON('http://localhost/Bedrock_WeCath_WeiXin/api/StudyDetail',{Jobnumber:Jobnumber.toString(),CourseCode:CourseCode.toString()},function(data){
+              	
+              
+              	//根据课程学习状态显示和隐藏相应按钮
+              	switch(data.Studystate)
+              	{
+              		
+              		case 1:
+					
+					document.getElementById('divButton').setAttribute("style","display: none");
+                   
+					break;
+					case 2:
+					 document.getElementById('divStart').setAttribute("style","display: none");
+                     
+                     document.getElementById('btnCancelSus').setAttribute("style","display: none");
+                     
+                    
+                     if(!data.isStop){
+                     	document.getElementById('btnSuspend').setAttribute("style","display: none");
+                     }
+                     if(!data.isDefer){
+                     	document.getElementById('btnDelayed').setAttribute("style","display: none");
+                     }
+                   
+					
+					
+					break;
+					case 3:
+					 document.getElementById('divStart').setAttribute("style","display: none");
+                      document.getElementById('btnFinish').setAttribute("style","display: none");
+					 document.getElementById('btnSuspend').setAttribute("style","display: none");
+					  document.getElementById('btnDelayed').setAttribute("style","display: none");
+					  
+					
+					break;
+					case 4:
+					 document.getElementById('divStart').setAttribute("style","display: none");
+					  document.getElementById('divButton').setAttribute("style","display: none");
+					
+					break;
+					default:
+					document.getElementById('divButton').setAttribute("style","display: none");
+              		
+              	}
+
+
+              });
+				
+			});
+			
+			var btnOne=document.getElementById("btnOne");
+			mui(".mui-segmented-control").on('tap','#btnOne',function(){
+				console.log(btnOne.text);
+  					var divOne=document.getElementById("divOne");
+  					var divTwo=document.getElementById("divTwo");
+  					var divThree=document.getElementById("divThree");
+  					divOne.setAttribute("style","display: block ;height: 250px;");
+  					divTwo.setAttribute("style","display: none;");
+  					divThree.setAttribute("style","display: none;");
+//					var test="test";
+//					var divStart=document.getElementById("divStart");
+//					var divSuspend=document.getElementById("divSuspend");
+//					var divDelay=document.getElementById("divDelay");
+//					if(test=="test")
+//					{
+//						divStart.setAttribute("style","display: block;text-align: center;height: 50px;");
+//						divSuspend.setAttribute("style","display: block;text-align: center;height: 50px;");
+//						divDelay.setAttribute("style","display: block;text-align: center;height: 50px;");
+//					    
+//					}
+			})
+			mui(".mui-segmented-control").on('tap','#btnTwo',function(){
+				console.log("divTwo");
+  					var divOne=document.getElementById("divOne");
+  					var divTwo=document.getElementById("divTwo");
+  					var divThree=document.getElementById("divThree");
+  					divOne.setAttribute("style","display: none;");
+  					divTwo.setAttribute("style","display:  block;height: 250px;");
+  					divThree.setAttribute("style","display: none;");
+//					var test="test";
+//					var divStart=document.getElementById("divStart");
+//					var divSuspend=document.getElementById("divSuspend");
+//					var divDelay=document.getElementById("divDelay");
+//					if(test=="test")
+//					{
+//						divStart.setAttribute("style","display: none;text-align: center;height: 50px;");
+//						divSuspend.setAttribute("style","display: none;text-align: center;height: 50px;");
+//						divDelay.setAttribute("style","display: none;text-align: center;height: 50px;");
+//					}
+			})
+			mui(".mui-segmented-control").on('tap','#btnThree',function(){
+				console.log("divThree");
+  					var divOne=document.getElementById("divOne");
+  					var divTwo=document.getElementById("divTwo");
+  					var divThree=document.getElementById("divThree");
+  					divOne.setAttribute("style","display: none;");
+  					divTwo.setAttribute("style","display: none;");
+  					divThree.setAttribute("style","display: block;height: 250px;");
+//					var test="test";
+//					var divStart=document.getElementById("divStart");
+//					var divSuspend=document.getElementById("divSuspend");
+//					var divDelay=document.getElementById("divDelay");
+//					if(test=="test")
+//					{
+//						divStart.setAttribute("style","display: none;text-align: center;height: 50px;");
+//						divSuspend.setAttribute("style","display: none;text-align: center;height: 50px;");
+//						divDelay.setAttribute("style","display: none;text-align: center;height: 50px;");
+//					}
+			})
+			//开始学习
+			function StartStudy(){
+					
+				var thisURL = window.location.search;
+				var  parameter=thisURL.split('?')[1];  
+                var code= parameter.split('&')[0].split('=')[1];
+                var Jobnumber =parameter.split('&')[1].split('=')[1];
+                mui.ajax('http://localhost/Bedrock_WeCath_WeiXin/api/StudyDetail/1',{
+			    	 		data:{
+			    	 			CourseCode:code,
+			    	 			Jobnumber:Jobnumber
+			    	 			},
+			    	 		dataType:'text',//服务器返回json格式数据
+							type:'post',//HTTP请求类型
+							timeout:5000,//超时时间设置为10秒；
+							headers:{'Content-Type':'application/json'},	              
+							success:function(data){
+									mui.alert(data);
+									mui.later(function() {
+									window.location.reload();
+									}, 1000);
+//								 mui.openWindow({
+//                       		 url: 'AddCourse.html', 
+// 								 id:'AddCourse'
+//								});
+							},
+							error:function(xhr,type,errorThrown){
+							//异常处理；
+							console.log(type);
+							mui.confirm(errorThrown);
+							}
+			    	 		
+			    	 	});
+                
+				
+			}
+			//完成学习
+			function finishStudy(){
+			
+				var thisURL = window.location.search;
+				var  parameter=thisURL.split('?')[1];  
+                var code= parameter.split('&')[0].split('=')[1];
+                var Jobnumber =parameter.split('&')[1].split('=')[1];
+                mui.ajax('http://localhost/Bedrock_WeCath_WeiXin/api/StudyDetail/4',{
+			    	 		data:{
+			    	 			CourseCode:code,
+			    	 			Jobnumber:Jobnumber
+			    	 			},
+			    	 		dataType:'text',//服务器返回json格式数据
+							type:'post',//HTTP请求类型
+							timeout:5000,//超时时间设置为10秒；
+							headers:{'Content-Type':'application/json'},	              
+							success:function(data){
+								mui.alert(data);
+									mui.later(function() {
+									window.location.reload();
+								
+								}, 1000);
+								 
+							},
+							error:function(xhr,type,errorThrown){
+							//异常处理；
+							console.log(type);
+							mui.confirm(errorThrown);
+							}
+			    	 		
+			    	 	});
+                
+				
+				
+			}
+			//跳转暂停页面
+			function StopStudy(){
+				
+				var thisURL = window.location.search;
+				var  parameter=thisURL.split('?')[1];  
+                var code= parameter.split('&')[0].split('=')[1];
+                var Jobnumber =parameter.split('&')[1].split('=')[1];
+				 mui.openWindow({
+                         		 url: 'StopStudy.html?CourseCode='+code+"&Jobnumber="+Jobnumber,
+                         		
+   								 id:'StopStudy'
+  								});
+			}
+			//取消暂停
+			function StopCancel()
+			{
+				var thisURL = window.location.search;
+				var  parameter=thisURL.split('?')[1];  
+                var code= parameter.split('&')[0].split('=')[1];
+                var Jobnumber =parameter.split('&')[1].split('=')[1];
+                mui.ajax('http://localhost/Bedrock_WeCath_WeiXin/api/StudyDetail/5',{
+			    	 		data:{
+			    	 			CourseCode:code,
+			    	 			Jobnumber:Jobnumber
+			    	 			},
+			    	 		dataType:'text',//服务器返回json格式数据
+							type:'post',//HTTP请求类型
+							timeout:5000,//超时时间设置为10秒；
+							headers:{'Content-Type':'application/json'},	              
+							success:function(data){
+								mui.alert(data);
+									mui.later(function() {
+									window.location.reload();
+								}, 1000);
+								
+							},
+							error:function(xhr,type,errorThrown){
+							//异常处理；
+							console.log(type);
+							mui.confirm(errorThrown);
+							}
+			    	 		
+			    	 	});
+                
+				
+				
+				
+			}
+			//延后
+			function DelayStudy(){
+				var thisURL = window.location.search;
+				var  parameter=thisURL.split('?')[1];  
+                var code= parameter.split('&')[0].split('=')[1];
+                var Jobnumber =parameter.split('&')[1].split('=')[1];
+				 mui.openWindow({
+                         		 url: 'Delay.html?CourseCode='+code+"&Jobnumber="+Jobnumber,
+                         		
+   								 id:'Delay'
+  								});
+				
+				
+			}
+			
+		</script>
+	</body>
+
+</html>

@@ -1,0 +1,134 @@
+<!doctype html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<link href="../../css/mui.min.css" rel="stylesheet" />
+		<script src="../../js/mui.min.js"></script>
+		<script type="text/javascript">
+			mui.init();
+			
+			//添加项目名称和工作时间
+		  	function add(){	 
+			//先保存div中原来的html
+			var html = document.getElementById("content-addfater").innerHTML;
+			//追加的代码加到一起插入div中
+			
+			document.getElementById("content-addfater").innerHTML +=  "<div class='worktime-outtable' style='position: relative;'><div class='content-padding'></div><input type='text' placeholder='输入项目名称' style='text-align: left;width: 50%;' id='ProjectName'/><div class='mui-numbox' data-numbox-step='1' data-numbox-min='0' data-numbox-max='8'><button class='mui-btn mui-numbox-btn-minus' type='button'></button><input id='WorkTime' class='mui-numbox-input' type='number' /><button class='mui-btn mui-numbox-btn-plus' type='button'>小时</button></div></div>"	
+			};	
+
+			function removes(){
+				var ObjList = document.getElementById('content-addfater').getElementsByClassName('worktime-outtable');
+				var removeObj = ObjList[ObjList.length-1];
+				//alert(removeObj);
+				removeObj.parentNode.removeChild(removeObj);
+			}
+			function addWork(){
+				
+				var check=false;
+				var worktimes= 0;
+				mui("#content-addfater .worktime-outtable").each(function(){
+					 var inputs =this.getElementsByTagName("input");
+				     var  ProjectName= inputs[0].value;
+				     var workTime= inputs[1].value;
+				     worktimes += parseFloat(workTime);
+				if(ProjectName==""||workTime==""){
+					check =true;
+				}
+				
+				});
+				
+				if(check){
+					mui.alert("项目名称和工作时间不能为空");
+				     return;
+				};
+				if(worktimes != 8){
+					mui.alert("当日总工时必须为8小时!");
+				     return;
+				}
+				var array=[];
+				mui("#content-addfater .worktime-outtable").each(function(){
+			    var inputs =this.getElementsByTagName("input");
+				var  ProjectName= inputs[0].value;
+				var workTime= inputs[1].value;
+				var Jobnumber=2;
+				var Duration="测试";
+				array.push({
+						"Jobnumber":Jobnumber,
+						 "WorkDate":workTime,
+						 "ProjectName":ProjectName,
+						 "Duration":Duration,
+				});
+			  
+				
+					
+				});
+				mui.ajax('http://localhost/Bedrock_WeCath_WeiXin/api/work',{
+		            //JSON.stringify(array)
+					data:array,
+					dataType:'text',
+					type:'post',
+					timeout:10000,
+					headers:{'Content-Type':'application/json'},	
+					success:function(data){
+						mui.alert(data);
+						mui.later(function() {
+								window.location.reload();
+						}, 1000);
+					
+					}, 
+					error:function(xhr,type,errorThrown){
+						//alert(errorThrown);
+		//异常处理；
+		console.log(errorThrown);
+	}
+					
+				});
+			}
+		</script>
+		<style>
+			.worktime-outtable{
+				height: 50px;
+				background-color: #FFFFFF;
+				border: 0px;	
+			}
+			.worktime-imgadd{
+				background-color: #FFFFFF;
+			}
+			#ProjectName,#WorkTime{
+				border: 0px;
+			}
+		</style>
+	</head>
+	<body>
+		<div class="mui-content" id="top">			
+			<div class="mui-input-row" id="content-addfater">
+				<div class="worktime-outtable" style="position: relative;">
+					<div class="content-padding"></div>
+					<input type="text" placeholder="输入项目名称" style="text-align: left;width: 50%;" id="ProjectName" />
+					<!--<input type="text" placeholder="输入工作时间" onkeyup="this.value=this.value.replace(/\D/g,'')" onafterpaste="this.value=this.value.replace(/\D/g,'')" style="text-align: right;width: 50%;position: absolute; right:0px;"  id="WorkTime"/>-->
+					<div class="mui-numbox" data-numbox-step='1' data-numbox-min='0' data-numbox-max='8'>
+ 					<button class="mui-btn mui-numbox-btn-minus" type="button"></button>
+  					 <input id="WorkTime" class="mui-numbox-input" type="number" />
+  					 
+  					<button class="mui-btn mui-numbox-btn-plus" type="button">小时</button>
+					</div>
+				</div>	
+
+			</div>
+			<div class="content-padding"></div>
+			<div class="worktime-imgadd">
+				<img src="../../images/plusicon.png" width="50px" style="margin-left: 45%;" onclick="add()"/>
+			</div>	
+			<div class="content-padding"></div>
+		<div id="fater-position">
+			<button type="button" class="mui-btn mui-btn-blue mui-btn-block" style="background-color:#EEEEF3;border-color: #66CCFF;color: #66CCFF;position: absolute; width: 45%;" onclick="removes()">删除</button>
+			<button type="button" class="mui-btn mui-btn-blue mui-btn-block" style="background-color:#66CCFF;border-color: #66CCFF;position: absolute;right: 0px;width:45%" onclick="addWork()">提交</button>
+		</div>
+		</div> 
+
+	</body>
+
+</html>

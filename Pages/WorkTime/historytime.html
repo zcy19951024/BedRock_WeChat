@@ -12,6 +12,9 @@
 		<script type="text/javascript">
 			mui.init()
 			(function($) {
+				 var thisURL = window.location.search;
+				var  Code =thisURL.split('?')[1];  
+                var Jobnumber= Code.split("=")[1]; 
 				$.init();
 				//起始时间
 				var resultStart = $('#resultStart')[0];
@@ -66,8 +69,8 @@
 					var s =document.getElementById('resultStart').value;
 					var e =document.getElementById('resultEnd').value;
 					var html=" ";
-					var num="2";
-					mui.getJSON('http://localhost/Bedrock_WeCath_WeiXin/api/work/'+num,{startDate:s,endDate:e},function(data){
+					 
+					mui.getJSON('http://localhost/Bedrock_WeCath_WeiXin/api/work/Get/'+Jobnumber,{startDate:s,endDate:e},function(data){
 				        
 				    if(data=="")
 					 	{

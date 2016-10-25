@@ -1,0 +1,90 @@
+			/*间距div*/			
+			.content-padding {
+				height: 10px;
+			}
+			/*标题字体加粗（ps：在原生样式上添加）*/			
+			.mui-title {
+				font-weight: bold
+			}
+			/*性别单选框父容器的相对定位*/			
+			.content-styleborder {
+				position: relative;
+			}
+			/*性别男的单选框定位*/			
+			#content-input-radio-nan {
+				position: absolute;
+				right: 60px
+			}
+			/*性别女的单选框定位*/			
+			#content-input-radio-nv {
+				position: absolute;
+				right: 0px
+			}
+			/*行高及背景（ps:在原生样式上添加）*/			
+			.mui-input-row {
+				height: 50px;
+				background-color: #FFFFFF;
+			}
+			/*文本标题的宽度*/			
+			#content-label-title {
+				width: 50%;
+			}
+			/*文本框的宽度*/			
+			#content-input-Cname,
+			#content-input-Ename,
+			#content-input-tel,
+			#content-input-maritalstatus,
+			#content-input-education,
+			#content-input-cardaddress,
+			#content-input-nowaddress,
+			#content-input-idcard,
+			#content-input-brithday,
+			#content-input-position,
+			#content-input-entrytime,
+			#content-input-contractstarttime,
+			#content-input-contractenttime,
+			#content-input-probationfinishtime,
+			#content-input-probationsalary,
+			#content-input-contractwage,
+			#content-input-pm,
+			#content-input-entrys,
+			#content-input-Epwd,
+			#content-input-Email,
+			#content-input-ADcontent,
+			#content-input-ADPWD,
+			#content-input-AD{
+				text-align:right;width: 50%;
+			}
+			#content-input-pwd {
+				height: 70px;
+				width: 90%;				
+				border-radius: 50px;
+			}
+			#pwdinp {
+				widows: 100px;
+				text-align: center;
+				margin-top: 40%;
+			}
+			.imgstyle{
+				width: 100%; text-align: center;margin-top: 5%;
+			}
+			/*文本框提示文字向右*/
+			
+			#content-input-email,
+			#content-input-pwd,
+			#content-input-address {
+				text-align: right;
+			}
+			/*按钮的样式*/
+			
+			#buttom,
+			#shenhe,
+			#shenheend {
+				background-color: #66CCFF;
+				border-color: #66CCFF;
+			}
+			/*按钮、单选框父容器的相对定位*/
+			
+			#fater-position {
+				position: relative;
+			}

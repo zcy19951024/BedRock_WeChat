@@ -59,7 +59,7 @@
 				var  Code =thisURL.split('?')[1];  
                 var Jobnumber= Code.split("=")[1]; 
             
-				mui.getJSON('http://localhost/Bedrock_WeCath_WeiXin/api/StudyCourse',{Jobnumber:Jobnumber},function(data){
+				mui.getJSON('http://localhost/Bedrock_WeCath_WeiXin/api/StudyCourse/Get',{Jobnumber:Jobnumber},function(data){
 					if(data ==""){
 						
 						mui.alert("没有新的课程！");
@@ -76,10 +76,12 @@
 			
 			//添加学习课程计划
 			mui(".mui-button-row").on('tap','#btnAdd',function(){
-		
-			var checked= true;
-			var succ =false;
-			var array=[];
+				var thisURL = window.location.search;
+				var  Code =thisURL.split('?')[1];  
+                var Jobnumber= Code.split("=")[1]; 
+				var checked= true;
+				var succ =false;
+				var array=[];
 			    mui("#content .content-outtable").each(function(){
 			    		
 			    	 var s = this.getElementsByTagName("input").item(0).checked;
@@ -91,10 +93,14 @@
 			    	array.push({
 			    	 			Emp_Id:1,
 			    	 			CourseCode:CourseCode,
-			    	 			Jobnumber:1
+			    	 			Jobnumber:Jobnumber
 			    	 		});
 			    });
-			    mui.ajax('http://localhost/Bedrock_WeCath_WeiXin/api/StudyDetail',{
+			     if(checked){
+			    	mui.alert("请选择课程！");
+			    	return;
+			    };
+			    mui.ajax('http://localhost/Bedrock_WeCath_WeiXin/api/StudyDetail/Post',{
 			    	 		data:array,
 			    	 		dataType:'text',//服务器返回json格式数据
 							type:'post',//HTTP请求类型
@@ -106,7 +112,7 @@
 								
 								mui.later(function() {
 							 mui.openWindow({
-                         		 url: 'AddCourse.html', 
+                         		 url: 'AddCourse-content.html?Jobnumber='+Jobnumber,
    								 id:'AddCourse'
   								});
 						}, 1000);
@@ -119,10 +125,7 @@
 							}
 			    	 		
 			    	 	});
-			    if(checked){
-			    	mui.alert("请选择课程！");
-			    	return;
-			    };
+			   
 			    
 			    
 			});

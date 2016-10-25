@@ -39,17 +39,21 @@
 	<script type="text/javascript">
 		mui.init();
        mui.ready(function(){
+       	 var thisURL = window.location.search;
        	(function($){
-       		var jobnum=1;
-       	  document.getElementById('Addhref').setAttribute("href","ChoseCourse-content.html?Jobnumber="+jobnum);
+       		
+				var  Code =thisURL.split('?')[1];  
+                var Jobnumber= Code.split("=")[1]; 
+       	
+       	  document.getElementById('Addhref').setAttribute("href","ChoseCourse-content.html?Jobnumber="+Jobnumber);
        	 
        		
         	
-        	mui.getJSON('http://localhost/Bedrock_WeCath_WeiXin/api/StudyCourse/2',{Jobnumber:jobnum},function(data){
+        	mui.getJSON('http://localhost/Bedrock_WeCath_WeiXin/api/StudyCourse/Get/2',{Jobnumber:Jobnumber},function(data){
 		         mui.each(data,function(index,item){
 		         	
-		             document.getElementById('content').innerHTML +="<div class='mui-input-row'><div class='content-padding'></div><div class='content-outtable'><a href='CourseInfo.html?CourseCode="+item[0].CourseCode+"&Jobnumber="+jobnum+"'><h4>"+item[0].CourseTitle+"("+item[0].State+")</h4><p>负责人：<span>"+item[0].CoursePrincipal+"</span></p><p>项目经理：<span>"+item[0].CoursePM+"</span></p><p>预期完成时间：<span>"+item[0].CourseFinishTime+"</span></p></a></div></div>";     
-		 
+		             document.getElementById('content').innerHTML +="<div class='mui-input-row'><div class='content-padding'></div><div class='content-outtable'><a href='CourseInfo.html?CourseCode="+item[0].CourseCode+"&Jobnumber="+Jobnumber+"'><h4>"+item[0].CourseTitle+"("+item[0].State+")</h4><p>负责人：<span>"+item[0].CoursePrincipal+"</span></p><p>项目经理：<span>"+item[0].CoursePM+"</span></p><p>预期完成时间：<span>"+item[0].CourseFinishTime+"</span></p></a></div></div>";     
+		 			
 		         	
 		         });
 		 

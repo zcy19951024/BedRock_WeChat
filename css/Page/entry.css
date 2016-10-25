@@ -1,0 +1,34 @@
+			/*标题字体为粗体（ps:原生样式上添加）*/
+			/*间距div*/
+			.content-padding{
+				height: 10px;
+			}
+			/*背景为白色的间距div*/
+			.content-content-padding{
+				height: 30px;background-color:#FFFFFF;margin-top:10px;
+			}
+			/*设置行高为70，背景为白色 （ps:原生样式上添加）*/
+			.mui-input-row{
+				height: 70px;background-color: #FFFFFF;
+				width:100%;
+			}
+			/*办理手续的文本宽度*/
+			#content-label-manage{
+				width:185px;
+			}
+			/*办理手续的文本框宽度*/
+			#entrystart,#entryfinish,#entrystarts{
+				text-align:right;width: 135px;
+			}
+			/*试用期的文本宽度*/
+			#content-label-period{
+				width:180px;
+			}
+			/*试用期的文本框宽度*/
+			#periodstart,#periodfinish{
+				text-align:right;width: 135px;
+			}
+			/*确定按钮的颜色*/
+			#buttom{
+				background-color:#66CCFF;border-color: #66CCFF;
+			}

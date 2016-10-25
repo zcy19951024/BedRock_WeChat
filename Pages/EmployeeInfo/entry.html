@@ -1,182 +1,95 @@
 <!doctype html>
 <html>
+
 	<head>
-		<meta charset="UTF-8">		
+		<meta charset="UTF-8">
 		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
 		<title></title>
 		<link href="../../css/mui.min.css" rel="stylesheet" />
 		<link rel="stylesheet" type="text/css" href="../../css/mui.picker.min.css" />
+		<link rel="stylesheet" href="../../css/Page/account.css" />
 		<script src="../../js/mui.min.js"></script>
-		<script type="text/javascript" src="../../js/mui.picker.min.js" ></script>		
-		<style>
-			/*标题字体为粗体（ps:原生样式上添加）*/
-			/*间距div*/
-			.content-padding{
-				height: 10px;
+		<script type="text/javascript" src="../../js/mui.picker.min.js"></script>
+		<script type="text/javascript" src="../../js/Page/entry.js"></script>
+		<script>
+		//验证身份证号
+			/*function $(e) {
+				return document.getElementById(e);
 			}
-			/*背景为白色的间距div*/
-			.content-content-padding{
-				height: 30px;background-color:#FFFFFF;margin-top:10px;
-			}
-			/*设置行高为70，背景为白色 （ps:原生样式上添加）*/
-			.mui-input-row{
-				height: 70px;background-color: #FFFFFF;
-				width:100%;
-			}
-			/*办理手续的文本宽度*/
-			#content-label-manage{
-				width:185px;
-			}
-			/*办理手续的文本框宽度*/
-			#entrystart,#entryfinish{
-				text-align:right;width: 135px;
-			}
-			/*试用期的文本宽度*/
-			#content-label-period{
-				width:180px;
-			}
-			/*试用期的文本框宽度*/
-			#periodstart,#periodfinish{
-				text-align:right;width: 135px;
-			}
-			/*确定按钮的颜色*/
-			#buttom{
-				background-color:#66CCFF;border-color: #66CCFF;
-			}
-		</style>
-		<script type="text/javascript">
-			/*mui.init()
-			function ha(){
-				alert(11);
-				document.getElementById("entrystart").addEventListener('input',function(){
-					console.log(this.value);
-				});
-				alert(22);
-			}	
-		*/
-			mui.init()
-			(function($) {
-				$.init();
-				//办理手续开始时间
-				var entrystart = $('#entrystart')[0];
-				var entrystarttime = $('.entrystarttime');
-				entrystarttime.each(function(i, btn) {
-					btn.addEventListener('tap', function() {
-						var optionsJson = this.getAttribute('data-options') || '{}';
-						var options = JSON.parse(optionsJson);
-						var id = this.getAttribute('id');
-						var picker = new $.DtPicker(options);
-						picker.show(function(rs) {
-							entrystart.value =rs.value;
-							picker.dispose();
-						});
-					}, false);
-				});
-			//办理手续结束时间
-			var entryfinish=$('#entryfinish')[0];
-			var entryfinishtime=$('.entryfinishtime');
-			entryfinishtime.each(function(i, btne) {
-				btne.addEventListener('tap', function() {
-					var optionsJson = this.getAttribute('data-options') || '{}';
-					var options = JSON.parse(optionsJson);
-					var id = this.getAttribute('id');var picker = new $.DtPicker(options);
-					picker.show(function(rs) {
-						entryfinish.value =rs.value;
-						picker.dispose();
-					});
-				}, false);
-			});
-			//试用期开始时间
-			var periodstart=$('#periodstart')[0];
-			var periodstarttime=$('.periodstarttime');
-			periodstarttime.each(function(i, btne) {
-				btne.addEventListener('tap', function() {
-					var optionsJson = this.getAttribute('data-options') || '{}';
-					var options = JSON.parse(optionsJson);
-					var id = this.getAttribute('id');var picker = new $.DtPicker(options);
-					picker.show(function(rs) {
-						periodstart.value =rs.value;
-						picker.dispose();
-					});
-				}, false);
-			});		
-			//试用期结束时间
-			var periodfinish=$('#periodfinish')[0];
-			var periodfinishtime=$('.periodfinishtime');
-			periodfinishtime.each(function(i, btne) {
-				btne.addEventListener('tap', function() {
-					var optionsJson = this.getAttribute('data-options') || '{}';
-					var options = JSON.parse(optionsJson);
-					var id = this.getAttribute('id');var picker = new $.DtPicker(options);
-					picker.show(function(rs) {
-						periodfinish.value =rs.value;
-						picker.dispose();
-					});
-				}, false);
-			});				
-		})(mui);				
-			function submitinput(){
-				var entrystart=document.getElementById("entrystart").value;
-				var entryfinish=document.getElementById("entryfinish").value;
-				var periodstart=document.getElementById("periodstart").value;				
-				var periodfinish=document.getElementById("periodfinish").value;	
-				if(entrystart==""||entryfinish==""||periodstart==""||periodfinish==""){
-					alert("请将信息填写完整！");
+
+			function go() {
+				var reg = /^[1-9]{1}[0-9]{14}$|^[1-9]{1}[0-9]{16}([0-9]|[xX])$/;
+				if(!reg.test(document.getElementById("content-input-idcard").value)) {
+					alert("请输入正确的身份证号");
 				}
-				else{
-					alert("111");
-				/*console.log(document.getElementsByTagName('input')[0].value);//打印出test	*/		
-				mui.ajax('http://localhost/Bedrock_WeCath_WeiXin/api/Entry',{
-				data:{
-					"ApplyStartTime":entrystart,
-					"ApplyEndTime":entryfinish,
-					"ProbationStartTime":periodstart,
-					"ProbationEndTime":periodfinish,
-				},
-				dataType:'json',//服务器返回json格式数据
-				type:'POST',//HTTP请求类型
-				timeout:10000,//超时时间设置为10秒；
-				headers:{'Content-Type':'application/json'},	              
-				success:function(data){
-						alert(JSON.stringify(data)); 
-						alert("添加成功！");
-				    },
-		        error:function(xhr,type,errorThrown){
-		            //异常处理；
-		            console.log(type);
-		        }
-			});	
-			}
-			}
-		</script>	
+
+			}*/
+		</script>
 	</head>
-	<body>		
-	<header class="mui-bar mui-bar-nav" >
-		<a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
-		<h1 class="mui-title">入职</h1>
-	</header>		
-	<div class="mui-content">			
-		<div class="content-content-padding"></div>
-		<div class="mui-input-row">
-		    <label id="content-label-manage">办理手续开始时间：</label>
-		    <input type="text" placeholder="请输入时间" data-options='{"type":"date","beginYear":2014,"endYear":2016}' id='entrystart' class="entrystarttime">
+
+	<body>
+		<div class="mui-content">
+			<input type="hidden" id="accounthid"></input>
+			<!--编号-->
+			<input type="hidden" id="states" />
+			<!--状态-->
+			<div class="content-padding"></div>
+			<div class="mui-input-row">
+				<label id="content-label-title">姓名：</label>
+				<input type="text" placeholder="请填写姓名" id="content-input-Cname">
+			</div>
+			<div class="mui-input-row">
+				<label id="content-label-title">英文名：</label>
+				<input type="text" placeholder="请填写英文名" id="content-input-Ename" onKeyUp="value=value.replace(/[^a-zA-Z]/g,'')">
+			</div>
+			<div class="mui-input-row">
+				<div class="content-styleborder">
+					<label id="content-label-title">性别：</label>
+					<div class="mui-input-row mui-radio mui-left" id="content-input-radio-nan">
+						<label>男</label>
+						<input name="radio1" type="radio" value="男" id="sex-nan">
+					</div>
+					<div class="mui-input-row mui-radio mui-left" id="content-input-radio-nv">
+						<label>女</label>
+						<input name="radio1" type="radio" value="女" id="sex-nv">
+					</div>
+				</div>
+			</div>
+			<div class="content-padding"></div>
+			<div class="mui-input-row">
+				<label id="content-label-title">身份证号：</label>
+				<input type="text" placeholder="请填写身份证号" id="content-input-idcard">
+			</div>
+			<div class="mui-input-row">
+				<label id="content-label-title">身份证地址：</label>
+				<input type="text" placeholder="请填写身份证地址" id="content-input-cardaddress">
+			</div>
+			<div class="mui-input-row">
+				<label id="content-label-title">现居住地址：</label>
+				<input type="text" placeholder="请填写现居住地址" id="content-input-nowaddress">
+			</div>
+			<div class="content-padding"></div>
+			<div class="mui-input-row">
+				<label id="content-label-title">婚姻状况：</label>
+				<input type="text" placeholder="请填写婚姻状况" id="content-input-maritalstatus">
+			</div>
+			<div class="mui-input-row">
+				<label id="content-label-title">最终学历：</label>
+				<input type="text" placeholder="请填写最终学历" id="content-input-education">
+			</div>
+			<div class="mui-input-row">
+				<label id="content-label-title">手机：</label>
+				<input type="text" placeholder="请填写联系方式" id="content-input-tel">
+			</div>
+			<div class="content-padding"></div>
+
+			<!--<div class="content-button-row">-->
+			<!--<button type="button" class="mui-btn mui-btn-blue mui-btn-block" id="buttom" onclick="submitinput()">确定</button>-->
+			<!--</div>-->
+			<button type="button" class="mui-btn mui-btn-blue mui-btn-block" id="shenheend" style="display: none;">您的信息已审核完毕，快去申请账户吧！</button>
+			<button type="button" class="mui-btn mui-btn-blue mui-btn-block" id="shenhe" onclick="hrentrybuttom()" style="display: none;">您的信息正在审核......</button>
+			<button type="button" class="mui-btn mui-btn-blue mui-btn-block" id="buttom" onclick="submitinput()">确定</button>
 		</div>
-		<div class="mui-input-row">
-		    <label id="content-label-manage">办理手续结束时间：</label>
-		    <input type="text" placeholder="请输入时间" data-options='{"type":"date","beginYear":2014,"endYear":2016}' id="entryfinish" class="entryfinishtime">
-		</div>	
-		<div class="content-content-padding"></div>
-		<div class="mui-input-row">
-		    <label id="content-label-period">试用期开始时间：</label>
-		    <input type="text" placeholder="请输入时间" data-options='{"type":"date","beginYear":2014,"endYear":2016}' id="periodstart" class="periodstarttime">
-		</div>	
-		<div class="mui-input-row">
-		    <label id="content-label-period">试用期结束时间：</label>
-		    <input type="text" placeholder="请输入时间" data-options='{"type":"date","beginYear":2014,"endYear":2016}' id="periodfinish" class="periodfinishtime">
-		</div>	
-		<div class="content-padding"></div>
-		<button type="button" class="mui-btn mui-btn-blue mui-btn-block" id="buttom" onclick="submitinput()">确定</button>
-	</div>		
 
 	</body>
 

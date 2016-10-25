@@ -1,92 +1,113 @@
 <!doctype html>
 <html>
 
-		<head>
-		<meta charset="UTF-8">		
+	<head>
+		<meta charset="UTF-8">
 		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
 		<title></title>
 		<link href="../../css/mui.min.css" rel="stylesheet" />
+		<link rel="stylesheet" href="../../css/Page/account.css" />
+		<link rel="stylesheet" type="text/css" href="../../css/mui.picker.min.css" />
 		<script src="../../js/mui.min.js"></script>
+		<script type="text/javascript" src="../../js/Page/hrapprove.js" ></script>
+		<script type="text/javascript" src="../../js/mui.picker.min.js" ></script>	
 		<style>
-			/*标题字体为粗体（ps:原生样式上添加）*/
-			.mui-title{
-				font-weight:bold
-			}
-			/*间距div*/
-			.content-padding{
-				height: 10px;
-			}
-			/*背景为白色的间距div*/
-			.content-content-padding{
-				height: 30px;background-color:#FFFFFF;margin-top:10px;
-			}
-			/*设置行高为70，背景为白色 （ps:原生样式上添加）*/
-			.mui-input-row{
-				height: 70px;background-color: #FFFFFF;
-			}
-			/*办理手续的文本宽度*/
-			#content-label-manage{
-				width:185px;
-			}
-			/*办理手续的文本框宽度*/
-			#content-input-manage{
-				text-align:right;width: 135px;
-			}
-			/*试用期的文本宽度*/
-			#content-label-period{
-				width:180px;
-			}
-			/*试用期的文本框宽度*/
-			#content-input-period{
-				text-align:right;width: 140px;
-			}
-			/*按钮、单选框父容器的相对定位*/
-			#fater-position{
-				position: relative;
-			}
+
 		</style>
-		<script type="text/javascript">
-			mui.init()
-		</script>	
-		
+
 	</head>
-	<body>		
-	<header class="mui-bar mui-bar-nav" >
-		<a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
-		<h1 class="mui-title">确认入职</h1>
-	</header>		
-	<div class="mui-content">			
-		<div class="content-content-padding"></div>
-		<div class="mui-input-row">
-		    <label id="content-label-manage">办理手续开始时间：</label>
-		    <input type="text" placeholder="请输入时间" id="content-input-manage">
+
+	<body>
+		<div class="mui-content">
+			<input type="hidden" id="entryId"/>
+			<input type="hidden" id="hrjobnumber"></input>
+			<div class="content-padding"></div>
+			<div class="mui-input-row">
+				<label id="content-label-title">姓名：</label>
+				<input type="text" placeholder="请填写姓名" id="content-input-Cname">
+			</div>
+			<div class="mui-input-row">
+				<label id="content-label-title">英文名：</label>
+				<input type="text" placeholder="请填写英文名" id="content-input-Ename" onKeyUp="value=value.replace(/[^a-zA-Z]/g,'')">
+			</div>
+			<div class="mui-input-row">
+				<div class="content-styleborder">
+					<label id="content-label-title">性别：</label>
+					<div class="mui-input-row mui-radio mui-left" id="content-input-radio-nan">
+						<label>男</label>
+						<input name="radio1" type="radio" value="男" id="sex-nans">
+					</div>
+					<div class="mui-input-row mui-radio mui-left" id="content-input-radio-nv">
+						<label>女</label>
+						<input name="radio1" type="radio" value="女" id="sex-nvs">
+					</div>
+				</div>
+			</div>
+			<div class="mui-input-row">
+				<label id="content-label-title">身份证号：</label>
+				<input type="text" placeholder="请填写身份证号" id="content-input-idcard">
+			</div>
+			<div class="mui-input-row">
+				<label id="content-label-title">身份证地址：</label>
+				<input type="text" placeholder="请填写身份证地址" id="content-input-cardaddress">
+			</div>
+			<div class="mui-input-row">
+				<label id="content-label-title">现住地址：</label>
+				<input type="text" placeholder="请填写现居住地址" id="content-input-nowaddress">
+			</div>
+			<div class="mui-input-row">
+				<label id="content-label-title">婚姻状况：</label>
+				<input type="text" placeholder="请填写婚姻状况" id="content-input-maritalstatus">
+			</div>
+			<div class="mui-input-row">
+				<label id="content-label-title">最终学历：</label>
+				<input type="text" placeholder="请填写最终学历" id="content-input-education">
+			</div>
+			<div class="mui-input-row">
+				<label id="content-label-title">手机：</label>
+				<input type="text" placeholder="请填写联系方式" id="content-input-tel">
+			</div>
+			<div class="content-padding"></div>
+			<div class="mui-input-row">
+				<label id="content-label-title">职位：</label>
+				<input type="text" placeholder="请填写职位" id="content-input-position">
+			</div>
+			<div class="mui-input-row">
+				<label id="content-label-title">入职日期：</label>
+				<!--<input type="text" placeholder="请选择入职日期" data-options='{"type":"date","beginYear":1950,"endYear":2050}' id="content-input-entrytime" class="entrytime" onfocus="this.blur()" >-->
+				<input type="text" placeholder="请输入时间" data-options='{"type":"date","beginYear":1950,"endYear":2050}' id="content-input-entrys" class="content-input-entrystime" onfocus="this.blur()">	
+			</div>
+			<div class="mui-input-row">
+				<label id="content-label-title">合同开始日期：</label>
+				<input type="text" placeholder="请选择合同开始时间" data-options='{"type":"date","beginYear":1950,"endYear":2050}' id="content-input-contractstarttime" class="contractstarttime" onfocus="this.blur()" >
+			</div>
+			<div class="mui-input-row">
+				<label id="content-label-title">合同到期：</label>
+				<input type="text" placeholder="请选择合同到期日期" id="content-input-contractenttime" class="contractenttime" onfocus="this.blur()" data-options='{"type":"date","beginYear":1950,"endYear":2050}'>
+			</div>
+			<div class="mui-input-row">
+				<label id="content-label-title">试用期到期：</label>
+				<input type="text" placeholder="请选择试用期到期日期" id="content-input-probationfinishtime" class="probationfinishtime" onfocus="this.blur()" data-options='{"type":"date","beginYear":1950,"endYear":2050}'>
+			</div>
+			<div class="mui-input-row">
+				<label id="content-label-title">试用期工资：</label>
+				<input type="text" placeholder="请填写试用期工资" id="content-input-probationsalary" onkeyup="value=value.replace(/[^\d.]/g,'')">
+			</div>
+			<div class="mui-input-row">
+				<label id="content-label-title">合同工资：</label>
+				<input type="text" placeholder="请填写合同工资" id="content-input-contractwage" onkeyup="value=value.replace(/[^\d.]/g,'')">
+			</div>
+			<div class="mui-input-row">
+				<label id="content-label-title">项目经理：</label>
+				<input type="text" placeholder="请填写项目经理" id="content-input-pm" >
+			</div>			
+			<div class="content-padding"></div>
+			<div id="fater-position">
+				<button type="button" class="mui-btn mui-btn-blue mui-btn-block" style="background-color:#EEEEF3;border-color: #66CCFF;color: #66CCFF;position: absolute; width: 45%;">退回</button>
+				<button type="button" class="mui-btn mui-btn-blue mui-btn-block" style="background-color:#66CCFF;border-color: #66CCFF;position: absolute;right: 0px;width:45%" onclick="hrok()">确认</button>
+			</div>
 		</div>
-		<div class="mui-input-row">
-		    <label id="content-label-manage">办理手续结束时间：</label>
-		    <input type="text" placeholder="请输入时间" id="content-input-manage">
-		</div>	
-		<div class="content-content-padding"></div>
-		<div class="mui-input-row">
-		    <label id="content-label-period">试用期开始时间：</label>
-		    <input type="text" placeholder="请输入时间" id="content-input-period">
-		</div>	
-		<div class="mui-input-row">
-		    <label id="content-label-period">试用期结束时间：</label>
-		    <input type="text" placeholder="请输入时间" id="content-input-period">
-		</div>	
-		<div class="content-padding"></div>
-		<div class="mui-input-row">
-		    <label>备注：</label>
-		    <input type="text" placeholder="请填写备注" id="content-input-period"/>
-		</div>	
-		<div class="content-padding"></div>
-		<div id="fater-position">
-			<button type="button" class="mui-btn mui-btn-blue mui-btn-block" style="background-color:#EEEEF3;border-color: #66CCFF;color: #66CCFF;position: absolute; width: 45%;">取消</button>
-			<button type="button" class="mui-btn mui-btn-blue mui-btn-block" style="background-color:#66CCFF;border-color: #66CCFF;position: absolute;right: 0px;width:45%">确认</button>
-		</div>
-	</div>		
 
 	</body>
-
 
 </html>

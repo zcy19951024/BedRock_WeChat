@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<title></title>		
+		<link href="../../css/mui.min.css" rel="stylesheet" />
+		<script src="../../js/mui.min.js"></script>
+		<script type="application/javascript">
+			
+			function sel(){
+				var FiloUrl=location.search;
+				var Filo=FiloUrl.replace("?id=","");
+				mui.openWindow({
+					url:'HRapprove.html?filo='+Filo,
+				})
+			}
+		</script>
+	</head>
+	<body>
+		<h1>正在等待HR同意，请稍后......<a href="javascript:void(0)" onclick="sel()">跳转查看</a></h1>
+	</body>
+</html>

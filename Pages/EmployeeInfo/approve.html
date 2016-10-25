@@ -10,7 +10,9 @@
 		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
 		<title></title>		
 		<link href="../../css/mui.min.css" rel="stylesheet" />
+		<link rel="stylesheet" href="../../css/Page/account.css" />
 		<script src="../../js/mui.min.js"></script>
+		<script type="text/javascript" src="../../js/Page/approve.js" ></script>
 		<style>
 			/*间距div*/
 			.content-padding{
@@ -65,8 +67,7 @@
 			}
 
 		</style>
-			
-			
+
 		<script type="text/javascript">
 			mui.init()
 			//alert(window.innerHeight)
@@ -74,78 +75,56 @@
 		
 	</head>
 	<body>
-	<header class="mui-bar mui-bar-nav">
-    	<a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
-    <h1 class="mui-title">申请确认</h1>
-	</header>
 	<div class="mui-content">	 
 		<div class="content-padding"></div>
 		<div class="mui-input-row">
 		    <label>姓名：</label>
-		    <input type="text" placeholder="请输入姓名" id="content-input-width"/>
+		    <input type="text" placeholder="请输入姓名" id="content-input-Cname"/>
 		</div>
 		<div class="mui-input-row" id="fater-position">
 			<label>性别：</label>
 			<div class="mui-input-row mui-radio mui-left" id="content-sex-nan">
 				<label>男</label>
-				<input name="radio1" type="radio" /> 
+				<input name="radio1" type="radio" id="adsex-nan"/> 
 			</div>
 		   <div class="mui-input-row mui-radio mui-left" id="content-sex-nv">
 				<label>女</label>
-				<input name="radio2" type="radio" /> 
+				<input name="radio2" type="radio" id="adsex-nv"/> 
 			</div>
-		</div>	
-		<div class="content-padding"></div>		
+		</div>		
 		<div class="mui-input-row">
 		    <label>英文名：</label>
-		    <input type="text" placeholder="请输入英文名" id="content-input-width">
+		    <input type="text" placeholder="请输入英文名" id="content-input-Ename">
 		</div>	
-		<div class="mui-input-row">
-		    <label>邮箱：</label>
-		    <input type="text" placeholder="英文名@bedrock.com" id="content-input-width">
-		</div>		
+	
 		<div class="mui-input-row">
 			    <label>初始密码：</label>
-			    <input type="text" placeholder="请输入密码" id="content-input-width">
-		</div>
-		<div class="content-padding"></div>		
+			    <input type="text" placeholder="请输入密码" id="content-input-Epwd">
+		</div>	
+		<div class="content-padding"></div>	
 		<div class="mui-input-row">
-		    <label>出生日期：</label>
-		    <input type="text" placeholder="请输入出生日期" id="content-input-width">
-		</div>
-		<div class="mui-input-row">
-		    <label>住址：</label>
-		    <input type="text" placeholder="请输入住址" id="content-input-width">
-		</div>		
-		<div class="mui-input-row">
-		    <label>联系方式：</label>
-		    <input type="text" placeholder="请输入联系方式" id="content-input-width">
-		</div>				
-		<div class="content-padding"></div>		
+		    <label>邮箱：</label>
+		    <input type="text" placeholder="英文名@bedrock.com" id="content-input-Email">
+		</div>			
+	
 		<div class="mui-input-row">
 		    <label>域帐号：</label>
-		    <input type="text" placeholder="请输入域帐号" id="content-input-width">
+		    <input type="text" placeholder="请输入域帐号" id="content-input-AD">
 		</div>
 		<div class="mui-input-row">
 		    <label>账号密码：</label>
-		    <input type="text" placeholder="请输入域帐号密码" id="content-input-width">
-		</div>		
-		<div class="mui-input-row">
-		    <label>项目经理：</label>
-		    <input type="text" placeholder="请输入项目经理" id="content-input-width">
-		</div>		
+		    <input type="text" placeholder="请输入域帐号密码" id="content-input-ADPWD">
+		</div>			
 		<div class="mui-input-row">
 		    <label>备注：</label>
-		    <input type="text" placeholder="请填写备注" id="content-input-width"/>
+		    <input type="text" placeholder="请填写备注" id="content-input-ADcontent"/>
 		</div>		
 		<div class="content-padding"></div>
 		<div id="fater-position">
-			<button type="button" class="mui-btn mui-btn-blue mui-btn-block" style="background-color:#EEEEF3;border-color: #66CCFF;color: #66CCFF;position: absolute; width: 45%;">取消</button>
-			<button type="button" class="mui-btn mui-btn-blue mui-btn-block" style="background-color:#66CCFF;border-color: #66CCFF;position: absolute;right: 0px;width:45%">确认</button>
+			<button type="button" class="mui-btn mui-btn-blue mui-btn-block" style="background-color:#EEEEF3;border-color: #66CCFF;color: #66CCFF;position: absolute; width: 45%;">退回</button>
+			<button type="button" class="mui-btn mui-btn-blue mui-btn-block" style="background-color:#66CCFF;border-color: #66CCFF;position: absolute;right: 0px;width:45%" onclick="ADapproval()">确认</button>
 		</div>
-		<!--<button type="button" class="mui-btn mui-btn-blue mui-btn-block" style="background-color:#66CCFF;border-color: #66CCFF; margin-top: 10px;">同意</button>		
-		<button type="button" class="mui-btn mui-btn-blue mui-btn-block" style="background-color:#EEEEF3;border-color: #66CCFF; margin-top: 10px;color: #66CCFF;">拒绝</button>
-	-->	</div>	
+		</div>	
 	</body>
 
 </html>

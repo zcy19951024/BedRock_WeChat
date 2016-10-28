@@ -11,6 +11,7 @@
 		<script src="../../js/mui.min.js"></script>
 		<script type="text/javascript" src="../../js/mui.picker.min.js"></script>
 		<script type="text/javascript" src="../../js/Page/entry.js"></script>
+		<script type="text/javascript" src="../../js/Page/WeChat.js" ></script>
 		<script>
 		//验证身份证号
 			/*function $(e) {
@@ -86,9 +87,12 @@
 			<!--<div class="content-button-row">-->
 			<!--<button type="button" class="mui-btn mui-btn-blue mui-btn-block" id="buttom" onclick="submitinput()">确定</button>-->
 			<!--</div>-->
+
+
+			<button type="button" class="mui-btn mui-btn-blue mui-btn-block" id="buttom" onclick="submitinput()" style="display: none;">确定</button>
+			<button type="button" class="mui-btn mui-btn-blue mui-btn-block" id="shenhe" onclick="hrentrybuttom()" style="display: none;">您的信息正在审核......</button>			
 			<button type="button" class="mui-btn mui-btn-blue mui-btn-block" id="shenheend" style="display: none;">您的信息已审核完毕，快去申请账户吧！</button>
-			<button type="button" class="mui-btn mui-btn-blue mui-btn-block" id="shenhe" onclick="hrentrybuttom()" style="display: none;">您的信息正在审核......</button>
-			<button type="button" class="mui-btn mui-btn-blue mui-btn-block" id="buttom" onclick="submitinput()">确定</button>
+			<button type="button" class="mui-btn mui-btn-blue mui-btn-block" id="tuihui"  style="display: none;" onclick="Resubmit()">信息被退回，重新提交</button>
 		</div>
 
 	</body>

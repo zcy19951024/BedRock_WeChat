@@ -16,6 +16,7 @@
 		<script src="../../js/mui.min.js"></script>
 		<script type="text/javascript" src="../../js/Page/account.js"></script>
 		<script type="text/javascript" src="../../js/mui.picker.min.js"></script>
+		<script type="text/javascript" src="../../js/Page/WeChat.js" ></script>
 		<script type="text/javascript">
 			mui.init();
 		</script>
@@ -27,11 +28,16 @@
 					<input type="hidden" id="accountadhid"/> <!--AD审核状态-->
 					<input type="hidden" id="email" /><!--邮箱-->
 					<input type="hidden" id="emailpwd" /><!--邮箱密码-->
-					<input type="password" placeholder="为账户设置一个初始密码吧！" id="content-input-pwd" style="text-align: center;">
+					<input type="password" placeholder="为邮箱设置一个初始密码吧！" id="content-input-pwd" style="display: none;">
 				</div>
-				<div class="content-button-row imgstyle" id="imghid">
+				<div class="content-padding"></div>
+				<div class="content-button-row imgstyle" id="imghid" style="display: none;">
 					<a href="javascript:void(0)" onclick="accountOKs()"><img src="../../images/dianji.png" width="95%" height="90px" /></a>
 				</div>
+				<div class="content-button-row imgstyle" id="imghidres" style="display: none;">
+					<a href="javascript:void(0)" onclick="accountResultSubmit()"><img src="../../images/res.png" width="95%" height="90px" /></a>
+				</div>
+				<div style="display: none;" id="adminretrun"><h3>管理员已退回，请重新申请!</h3></div>				
 				<div style="display: none;" id="dai">
 					<h3>账户正在等待管理员审核...<a href="javascript:void(0)" onclick="approvalok()">点击查看</a></h3>
 				</div>

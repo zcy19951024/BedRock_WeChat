@@ -2,13 +2,12 @@ mui.init()
 	//一开始就加载
 mui.ready(function() {
 	(function($) {
-		//alert(111);
+		WeChat.init();
 		var iid = location.search;
 		var id = iid.replace("?id=", "")
 		if(id != "") {
-			var surl = "http://localhost/Bedrock_WeCath_WeiXin/api/Account/GetAccountApproval?jobnumber=" + id;
-			alert(surl);
-			mui.getJSON(surl, "", function(data) {
+			//var surl = "http://192.168.0.191/BedrockAPI/api/Account/GetAccountApproval?jobnumber=" + id;
+			mui.getJSON(WeChat.ADApproveStartLoad+id, "", function(data) {
 				mui.each(data, function(index, item) {
 					document.getElementById("content-input-Cname").value = item.CName;
 					if(item.Sex == "男") {
@@ -24,14 +23,11 @@ mui.ready(function() {
 				document.getElementById("adsex-nan").disabled = "disabled";
 				document.getElementById("adsex-nv").disabled = "disabled";
 				document.getElementById("content-input-Ename").readOnly = true;
-				//document.getElementById("content-input-Epwd").readOnly=true;
-				//var state = document.getElementById("accountadhid").value;
-				//alert("78" + state);
 			});
 		}
 	})(mui);
 });
-//点击确定http://192.168.0.132/BedrockAPI/api/Account/PostADApproval?jobnumber=Bedrock2016102158
+//点击确定
 function ADapproval() {
 	var iid = location.search;
 	var id = iid.replace("?id=", "")
@@ -43,7 +39,7 @@ function ADapproval() {
 	if(Epwd == "" || Email == "" || AD == "" || ADPWD == "") {
 		alert("请将除备注外的信息填写完整！");
 	} else {
-		mui.ajax('http://localhost/Bedrock_WeCath_WeiXin/api/Account/PostADApproval?jobnumber='+id, {
+		mui.ajax(WeChat.ADApproveSubmitYes+id, {
 			data: {
 				"Jobnumber": id,
 				"AD": AD,
@@ -70,4 +66,36 @@ function ADapproval() {
 		});
 
 	}
+}
+//点击退回
+
+function ADtuihui(){
+	var iid = location.search;
+	var id = iid.replace("?id=", "")
+	var content=document.getElementById("content-input-ADcontent").value;
+	alert(content);
+	if(content=="") {
+		alert("请在备注处填写原因！");
+	} else {
+		mui.ajax(WeChat.ADApproveSubmitNo+id, {
+			data: {
+				"AccountComent": content,
+			},
+			dataType: 'json', //服务器返回json格式数据
+			type: 'POST', //HTTP请求类型
+			contentType: 'application/json; charset=utf-8',
+			timeout: 10000, //超时时间设置为10秒；
+			success: function(data) {
+				mui.toast('添加成功!');
+				mui.openWindow({
+					url: '../../Pages/EmployeeInfo/account.html?id=' + id,
+				});
+			},
+			error: function(xhr, type, errorThrown) {
+				//异常处理；
+				mui.toast('连接失败，请检查网络!');
+			}
+		});
+
+	}	
 }

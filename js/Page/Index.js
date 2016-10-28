@@ -1,22 +1,41 @@
 mui.init();
 mui.ready(function() {
 	(function($) {
-		alert();
+		WeChat.init();
 		var iid = location.search;
 		var id = iid.replace("?id=", "")
 		if(id != "") {
-			var surl = "http://localhost/Bedrock_WeCath_WeiXin/api/Index/GetSel?jobnumber=" + id;
-			//alert(surl);
-			mui.getJSON(surl, "", function(data) {
+			//var surl = "http://192.168.0.191/BedrockAPI/api/Index/GetSel?jobnumber=" + id;
+			mui.getJSON(WeChat.HomeStartLoad + id, "", function(data) {
 				mui.each(data, function(index, item) {
 					document.getElementById("ADstatus").value = item.AccountStatus;
-					//alert(item.AccountStatus);
 					document.getElementById("hrstatus").value = item.Status;
-					//alert(item.Status);
-					document.getElementById("AD").value=item.AD;
+					document.getElementById("AD").value = item.AD;
 				});
-				//var state = document.getElementById("ADstatus").value;
+				var ADstate = document.getElementById("ADstatus").value;
+				var hrstate = document.getElementById("hrstatus").value;
+				if(hrstate == "HR已审核" && ADstate == "" || ADstate == "AD待审核") {
+					document.getElementById("oneblank").style.display = "block";
+					document.getElementById("oneblank").style.marginLeft = "45%";
+					document.getElementById("twowhite").style.display = "block";
+					document.getElementById("twowhite").style.marginLeft = "45%";
+				} else if(ADstate == "AD已审核" && hrstate == "HR已审核") {
+					document.getElementById("oneblank").style.display = "block";
+					document.getElementById("oneblank").style.marginLeft = "45%";
+					document.getElementById("twoblank").style.display = "block";
+					document.getElementById("twoblank").style.marginLeft = "45%";
+				} else {
+					document.getElementById("onewhite").style.display = "block";
+					document.getElementById("onewhite").style.marginLeft = "45%";
+					document.getElementById("twowhite").style.display = "block";
+					document.getElementById("twowhite").style.marginLeft = "45%";
+				}
 			});
+		} else {
+			document.getElementById("onewhite").style.display = "block";
+			document.getElementById("onewhite").style.marginLeft = "45%";
+			document.getElementById("twowhite").style.display = "block";
+			document.getElementById("twowhite").style.marginLeft = "45%";
 		}
 	})(mui);
 });
@@ -33,6 +52,11 @@ function entry() {
 	} else {
 		mui.openWindow({
 			url: 'Pages/EmployeeInfo/entry.html?id=' + hieId,
+			show: {
+				autoShow: false, //页面loaded事件发生后自动显示，默认为true
+				//aniShow: animationType, //页面显示动画，默认为”slide-in-right“；
+				//duration: animationTime //页面动画持续时间，Android平台默认100毫秒，iOS平台默认200毫秒；
+			}
 		})
 	}
 }
@@ -42,16 +66,19 @@ function account() {
 	var UrlId = location.search; //获取entry.js Url传过来的ID	
 	var Ids = UrlId.replace("?id=", ""); //将ID存入隐藏文本框	
 	var hieId = document.getElementById("inphidden").value = Ids; //获取隐藏文本框的ID
-	var sate=document.getElementById("hrstatus").value;
-	if(hieId == "") {
+	var sate = document.getElementById("hrstatus").value;
+	if(hieId == "" || sate == "待审核") {
 		mui.toast("请先完成入职");
-	}
-	else if(sate!="HR已审核"){
+	} else if(sate != "HR已审核") {
 		mui.toast("请先完成入职");
-	}
-	else {
+	} else {
 		mui.openWindow({
 			url: 'Pages/EmployeeInfo/account.html?id=' + hieId,
+			show: {
+				autoShow: false, //页面loaded事件发生后自动显示，默认为true
+				//aniShow: animationType, //页面显示动画，默认为”slide-in-right“；
+				//duration: animationTime //页面动画持续时间，Android平台默认100毫秒，iOS平台默认200毫秒；
+			}
 		});
 	}
 }
@@ -60,19 +87,13 @@ function course() {
 	var jobId = location.search; //获取entry.js Url传过来的ID	
 	var jobIds = jobId.replace("?id=", ""); //将ID存入隐藏文本框	
 	var Onejobnumber = document.getElementById("inpjobnumber").value = jobIds; //获取隐藏文本框的ID	
-	var satehr=document.getElementById("hrstatus").value;
-	var sateAD=document.getElementById("ADstatus").value;
-	if(Onejobnumber == ""||satehr!="HR已审核") {
+	var satehr = document.getElementById("hrstatus").value;
+	var sateAD = document.getElementById("ADstatus").value;
+	if(Onejobnumber == "" || satehr != "HR已审核") {
 		mui.toast("请先完成入职！");
-	}
-	else if(sateAD!="AD已审核"){
+	} else if(sateAD != "AD已审核") {
 		mui.toast("请先申请账户！");
-	}
-	else {
-		document.getElementById("twoblank").style.display="block";
-		document.getElementById("onewhite").style.display="block";
-		document.getElementById("twowhite").style.display="none";
-		document.getElementById("oneblank").style.display="none";
+	} else {
 		mui.openWindow({
 			url: 'Pages/Courses/AddCourse-content.html?id=' + Onejobnumber,
 			waiting: {
@@ -85,13 +106,10 @@ function course() {
 //工时
 function Times() {
 	var jobId = location.search; //获取entry.js Url传过来的ID	
-	var jobIds = jobId.replace("?jid=", ""); //将ID存入隐藏文本框	
+	var jobIds = jobId.replace("?id=", ""); //将ID存入隐藏文本框	
 	var Onejobnumber = document.getElementById("inpjobnumber").value = jobIds; //获取隐藏文本框的ID
-	if(Onejobnumber == "") {
-		mui.toast("请先将信息填写完整！");
-	} else {
-		mui.openWindow({
-			url: 'Pages/WorkTime/WorkTime-content.html' + Onejobnumber
-		})
-	}
+	mui.openWindow({
+		url: 'Pages/WorkTime/WorkTime-content.html?id='+Onejobnumber
+	})
+
 }

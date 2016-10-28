@@ -7,6 +7,8 @@
 		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
 		<link href="../../css/mui.min.css" rel="stylesheet" />
 	    <link rel="stylesheet" type="text/css" href="../../css/mui.picker.min.css" />
+	    <link rel="stylesheet" type="text/css" href="../../css/Page/feedback.css" />
+	  
 	</head>
 
 	<body>
@@ -46,22 +48,26 @@
 					});
 				}, false);
 			});
+				//选择快捷输入
+			mui('.mui-popover').on('tap','li',function(e){
+	  		document.getElementById("question").value = document.getElementById("question").value + this.children[0].innerHTML;
+	 	    mui('.mui-popover').popover('toggle')
+           });
 			})(mui);
+			
 		  function StopStudy(){
 		    var thisURL = window.location.search;
 			var  parameter=thisURL.split('?')[1];  
             var code= parameter.split('&')[0].split('=')[1];
             var Jobnumber =parameter.split('&')[1].split('=')[1];
-//		  	var startdata = document.getElementById('resultStart').value;
-//		  	var Enddata = document.getElementById('resultEnd').value;
-		  	var reason =document.getElementById('reason').value;
+
+		  	var reason =document.getElementById('question').value;
 		  
 		  mui.ajax('http://localhost/Bedrock_WeCath_WeiXin/api/StudyDetail/Put/2',{
 		                
 					data:{
 						"Jobnumber":Jobnumber,
 						 "CourseCode":code,
-						 
 						  "StopReason":reason
 					},
 					dataType:'text',
@@ -69,13 +75,12 @@
 					timeout:10000,
 					headers:{'Content-Type':'application/json'},	
 					success:function(data){
-						mui.alert(data);
-						mui.later(function() {
-									mui.openWindow({
+					mui.alert(data,"暂停学习","确定",function () {
+								mui.openWindow({
                          		 url: 'CourseInfo.html?CourseCode='+code+"&Jobnumber="+Jobnumber, 
    								 id:'CourseInfo'
   								});
-									}, 1000);
+									});
 						 
 					},
 					error:function(xhr,type,errorThrown){
@@ -95,18 +100,40 @@
 	 <div class="mui-content">
 	 	
 	  <form class="mui-input-group">
-	    <!--<div class="mui-input-row">
-	        <label>开始时间</label>
-	       <input type="text" placeholder="选择开始时间" style="width: 47%;margin-left:20px;" data-options='{"type":"date","beginYear":2014,"endYear":2016}' id='resultStart' class="btnStart" />
-	    </div>
-	     <div class="mui-input-row">
-	        <label>结束时间</label>
-	       <input type="text" placeholder="选择结束时间" style="width: 47%;margin-left:20px;" data-options='{"type":"date","beginYear":2014,"endYear":2016}' id='resultEnd' class="btnEnd" />
-	    </div>-->
-	     <div class="mui-input-row" style="height: 100px;">
+	  
+	     <!--<div class="mui-input-row" style="height: 100px;">
 	        <label>申请理由</label>
 	       <textarea id="reason" rows="5" placeholder="请在此处填写理由"></textarea>
-	    </div>
+	    </div>-->
+	    <div class="mui-content-padded"  style="margin-top: auto;">
+				<div style="margin-top: 10px;" class="mui-inline">暂停原因</div>
+				<a class="mui-pull-right mui-inline" style="margin-top: 10px;"  href="#popover">
+					快捷输入
+					<span class="mui-icon mui-icon-arrowdown"></span>
+				</a>
+				<!--快捷输入具体内容-->
+				<div id="popover" class="mui-popover">
+					<div class="mui-popover-arrow"></div>
+					<div class="mui-scroll-wrapper">
+						<div class="mui-scroll">
+							<ul class="mui-table-view">
+								<!--仅流应用环境下显示-->
+								<li class="mui-table-view-cell stream">
+									<a href="#">桌面快捷方式创建失败</a>
+								</li>
+								<li class="mui-table-view-cell"><a href="#">宝宝心里苦</a></li>
+								<li class="mui-table-view-cell"><a href="#">蓝瘦香菇</a></li>
+								<li class="mui-table-view-cell"><a href="#">女朋友跟经纪人跑了</a></li>
+								<li class="mui-table-view-cell"><a href="#">广告位招租</a></li>
+							</ul>
+						</div>
+					</div>
+
+				</div>
+			</div>
+			<div class="row mui-input-row" style="height: 100px;">
+				<textarea id='question' class="mui-input-clear question" placeholder="请详细描述你的暂停原因..."></textarea>
+			</div>
 	     <div class="mui-button-row">
         <button type="button" class="mui-btn mui-btn-primary" onclick="StopStudy()">提交</button>
       

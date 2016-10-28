@@ -65,23 +65,25 @@ mui.init()
 })(mui);
 
 //一开始就加载员工填写的信息
+mui.ready(function() {
 (function($) {
+	alert(33);
+	WeChat.init();
+	alert(11);
 	var FiloUrl = window.location.search;
 	var filo = FiloUrl.replace("?id=", "");
 
-	var surl = "http://localhost/Bedrock_WeCath_WeiXin/api/Entry/GetHrApprovel?id=" + filo;
-	mui.getJSON(surl, "", function(data) {
-		//alert(1234);
+	//var surl = "http://192.168.0.191/BedrockAPI/api/Entry/GetHrApprovel?id=" + filo;
+	mui.getJSON(WeChat.HRApproveStartLoad + filo, "", function(data) {
+		alert(22);
 		mui.each(data, function(index, item) {
-			//alert(12345);
 			document.getElementById("content-input-Cname").value = item.CName;
-			document.getElementById("content-input-Cname").readOnly="readonly";
 			document.getElementById("content-input-Ename").value = item.EName;
-			document.getElementsByName("radio1").value=item.Sex;
+			document.getElementsByName("radio1").value = item.Sex;
 			if(item.Sex == "男") {
-				document.getElementById("sex-nans").checked = "checked";
-			} else {
 				document.getElementById("sex-nans").checked = true;
+			} else {
+				document.getElementById("sex-nvs").checked = true;
 			}
 			document.getElementById("content-input-idcard").value = item.IDcare;
 			document.getElementById("content-input-cardaddress").value = item.CareAddress;
@@ -91,14 +93,27 @@ mui.init()
 			document.getElementById("content-input-tel").value = item.Phone;
 			document.getElementById("hrjobnumber").value = item.Jobnumber;
 			document.getElementById("entryId").value = item.Id;
-			//alert(item.Id);
 		});
+		//文本框禁用
+		document.getElementById("content-input-Cname").readOnly = true;
+		/*document.getElementById("adsex-nans").disabled = "disabled";
+		document.getElementById("adsex-nvs").disabled = "disabled";*/
+		//document.getElementById("adsex-nans").disabled="disabled";
+		document.getElementById("content-input-Ename").readOnly = true;
+		document.getElementById("content-input-idcard").readOnly = true;
+		document.getElementById("content-input-cardaddress").readOnly = true;
+		document.getElementById("content-input-nowaddress").readOnly = true;
+		document.getElementById("content-input-maritalstatus").readOnly = true;
+		document.getElementById("content-input-education").readOnly = true;
+		document.getElementById("content-input-tel").readOnly = true;
 	});
-})(mui);
 
+})(mui);
+});
+
+//管理员确认
 function hrok() {
 	var Cname = document.getElementById("content-input-Cname").value; //姓名
-	//alert("姓名" + Cname);
 	var Ename = document.getElementById("content-input-Ename").value; //英文名
 	var sex = document.getElementsByName("radio1"); //性别
 	var sexs;
@@ -120,12 +135,14 @@ function hrok() {
 	var probationsalary = document.getElementById("content-input-probationsalary").value; //试用期工资
 	var contractwage = document.getElementById("content-input-contractwage").value; //合同工资
 	var pm = document.getElementById("content-input-pm").value; //项目经理
+	var hrconent = document.getElementById("content-input-hrconent").value; //备注
 	var jobid = document.getElementById("hrjobnumber").value;
 	var Id = document.getElementById("entryId").value;
-	if(Cname = "" || Ename == "" || sexs == "" || idcard == "" || nowaddress == "") {
+	if(positions = "" || entrys == "") {
 		mui.alert("请将基本信息输入完整！")
 	} else {
-		mui.ajax('http://localhost/Bedrock_WeCath_WeiXin/api/Entry/PostHrEntry?jobnumber=' + jobid, {
+		var positionss = document.getElementById("content-input-position").value; //职位
+		mui.ajax(WeChat.HRApproveSubmitYes + jobid, {
 			data: {
 				"Id": Id,
 				"Jobnumber": jobid,
@@ -138,7 +155,7 @@ function hrok() {
 				"MaritalStatus": maritalstatus,
 				"Education": education,
 				"Phone": tel,
-				"Position": positions,
+				"PositionEmp": positionss,
 				"EntryStartTime": entrys,
 				"ContractStartTime": contractstarttime,
 				"ContractEndTime": contractenttime,
@@ -146,13 +163,13 @@ function hrok() {
 				"Probationsalary": probationsalary,
 				"Contractsalary": contractwage,
 				"PM": pm,
+				"hrcoment": hrconent
 			},
 			dataType: 'json', //服务器返回json格式数据
 			type: 'POST', //HTTP请求类型
 			contentType: 'application/json; charset=utf-8',
 			timeout: 10000, //超时时间设置为10秒；
 			success: function(data) {
-				alert(JSON.stringify(data));
 				var datas = eval('(' + JSON.stringify(data) + ')');
 				mui.toast('添加成功!');
 				mui.openWindow({
@@ -164,5 +181,36 @@ function hrok() {
 				mui.toast('连接失败，请检查网络!');
 			}
 		});
+
+	}
+}
+
+//管理员退回
+function hrretrun() {
+	var jobid = document.getElementById("hrjobnumber").value;
+	var hrconent = document.getElementById("content-input-hrconent").value; //备注
+	if(hrconent != "") {
+		mui.ajax(WeChat.HRApproveSubmitNo + jobid, {
+			data: {
+				"coment": hrconent,
+			},
+			dataType: 'json', //服务器返回json格式数据
+			type: 'POST', //HTTP请求类型
+			contentType: 'application/json; charset=utf-8',
+			timeout: 10000, //超时时间设置为10秒；
+			success: function(data) {
+				var datas = eval('(' + JSON.stringify(data) + ')');
+				mui.toast('退回成功!');
+				mui.openWindow({
+					url: 'entry.html?id=' + jobid
+				});
+			},
+			error: function(xhr, type, errorThrown) {
+				//异常处理；
+				mui.toast('连接失败，请检查网络!');
+			}
+		});
+	} else {
+		alert("请在备注处填写原因！");
 	}
 }

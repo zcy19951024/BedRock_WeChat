@@ -52,7 +52,8 @@
 			#content-input-Email,
 			#content-input-ADcontent,
 			#content-input-ADPWD,
-			#content-input-AD{
+			#content-input-AD,
+			#content-input-hrconent{
 				text-align:right;width: 50%;
 			}
 			#content-input-pwd {
@@ -79,7 +80,8 @@
 			
 			#buttom,
 			#shenhe,
-			#shenheend {
+			#shenheend,
+			#tuihui {
 				background-color: #66CCFF;
 				border-color: #66CCFF;
 			}

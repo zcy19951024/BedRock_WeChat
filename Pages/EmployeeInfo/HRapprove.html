@@ -11,6 +11,7 @@
 		<script src="../../js/mui.min.js"></script>
 		<script type="text/javascript" src="../../js/Page/hrapprove.js" ></script>
 		<script type="text/javascript" src="../../js/mui.picker.min.js" ></script>	
+		<script type="text/javascript" src="../../js/Page/WeChat.js" ></script>
 		<style>
 
 		</style>
@@ -79,7 +80,7 @@
 			</div>
 			<div class="mui-input-row">
 				<label id="content-label-title">合同开始日期：</label>
-				<input type="text" placeholder="请选择合同开始时间" data-options='{"type":"date","beginYear":1950,"endYear":2050}' id="content-input-contractstarttime" class="contractstarttime" onfocus="this.blur()" >
+				<input type="text" placeholder="请选择合同开始日期" data-options='{"type":"date","beginYear":1950,"endYear":2050}' id="content-input-contractstarttime" class="contractstarttime" onfocus="this.blur()" >
 			</div>
 			<div class="mui-input-row">
 				<label id="content-label-title">合同到期：</label>
@@ -87,7 +88,7 @@
 			</div>
 			<div class="mui-input-row">
 				<label id="content-label-title">试用期到期：</label>
-				<input type="text" placeholder="请选择试用期到期日期" id="content-input-probationfinishtime" class="probationfinishtime" onfocus="this.blur()" data-options='{"type":"date","beginYear":1950,"endYear":2050}'>
+				<input type="text" placeholder="请选择试用期日期" id="content-input-probationfinishtime" class="probationfinishtime" onfocus="this.blur()" data-options='{"type":"date","beginYear":1950,"endYear":2050}'>
 			</div>
 			<div class="mui-input-row">
 				<label id="content-label-title">试用期工资：</label>
@@ -100,10 +101,14 @@
 			<div class="mui-input-row">
 				<label id="content-label-title">项目经理：</label>
 				<input type="text" placeholder="请填写项目经理" id="content-input-pm" >
-			</div>			
+			</div>		
+			<div class="mui-input-row">
+				<label id="content-label-title">备注：</label>
+				<input type="text" placeholder="请填写备注" id="content-input-hrconent" >
+			</div>				
 			<div class="content-padding"></div>
 			<div id="fater-position">
-				<button type="button" class="mui-btn mui-btn-blue mui-btn-block" style="background-color:#EEEEF3;border-color: #66CCFF;color: #66CCFF;position: absolute; width: 45%;">退回</button>
+				<button type="button" class="mui-btn mui-btn-blue mui-btn-block" style="background-color:#EEEEF3;border-color: #66CCFF;color: #66CCFF;position: absolute; width: 45%;" onclick="hrretrun()">退回</button>
 				<button type="button" class="mui-btn mui-btn-blue mui-btn-block" style="background-color:#66CCFF;border-color: #66CCFF;position: absolute;right: 0px;width:45%" onclick="hrok()">确认</button>
 			</div>
 		</div>

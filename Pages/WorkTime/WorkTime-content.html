@@ -14,8 +14,14 @@
 				var  Code =thisURL.split('?')[1];  
                 var Jobnumber= Code.split("=")[1]; 
 				document.getElementById('history').setAttribute("href","historytime.html?Jobnumber="+Jobnumber);
-				
-				
+				var obj =document.getElementById('ProjectName');
+				mui.getJSON('http://localhost/Bedrock_WeCath_WeiXin/api/Project/Get',function(data){
+					mui.each(data,function(index,item){
+						
+						 obj.options.add(new Option(item.projectName,item.projectName)); //这个兼容IE与firefox  
+							});
+						});
+						
 			});
 			
 			
@@ -25,8 +31,26 @@
 			var html = document.getElementById("content-addfater").innerHTML;
 			//追加的代码加到一起插入div中
 			
-			document.getElementById("content-addfater").innerHTML +=  "<div class='worktime-outtable' style='position: relative;'><div class='content-padding'></div><input type='text' placeholder='输入项目名称' style='text-align: left;width: 50%;' id='ProjectName'/><div class='mui-numbox' data-numbox-step='1' data-numbox-min='0' data-numbox-max='8'><button class='mui-btn mui-numbox-btn-minus' type='button'></button><input id='WorkTime' class='mui-numbox-input' type='number' /><button class='mui-btn mui-numbox-btn-plus' type='button'>小时</button></div></div>"	
-			};	
+			document.getElementById("content-addfater").innerHTML +=  "<div class='worktime-outtable' style='position: relative;'><div class='content-padding'></div><select class='mui-btn mui-btn-block' id='ProjectName'  style='text-align: left; width:auto;left:0px;position: absolute;'><option value='item-1'>选择项目名称</option></select><div class='mui-numbox' data-numbox-step='1' data-numbox-min='0' data-numbox-max='8'><button class='mui-btn mui-numbox-btn-minus' type='button'></button><input id='WorkTime' class='mui-numbox-input' type='number' /><button class='mui-btn mui-numbox-btn-plus' type='button'>小时</button></div></div>"	
+				
+				mui("#content-addfater .worktime-outtable").each(function(){
+				 
+				    var obj =this.getElementsByTagName('select');
+				    var count= obj[0].options.length;
+				    if(count <=1){
+				    	
+				        mui.getJSON('http://localhost/Bedrock_WeCath_WeiXin/api/Project/Get',function(data){
+						mui.each(data,function(index,item){
+						
+						 obj[0].options.add(new Option(item.projectName,item.projectName)); //这个兼容IE与firefox  
+							});
+						});
+				    }
+				  
+				    
+			
+				});
+		  	};
 
 			function removes(){
 				var ObjList = document.getElementById('content-addfater').getElementsByClassName('worktime-outtable');
@@ -40,8 +64,9 @@
 				var worktimes= 0;
 				mui("#content-addfater .worktime-outtable").each(function(){
 					 var inputs =this.getElementsByTagName("input");
-				     var  ProjectName= inputs[0].value;
-				     var workTime= inputs[1].value;
+					  var selects =this.getElementsByTagName('select');
+				     var  ProjectName= selects[0].value;
+				     var workTime= inputs[0].value;
 				     worktimes += parseFloat(workTime);
 				if(ProjectName==""||workTime==""){
 					check =true;
@@ -63,8 +88,9 @@
                 var Jobnumber= Code.split("=")[1]; 
 				mui("#content-addfater .worktime-outtable").each(function(){
 			    var inputs =this.getElementsByTagName("input");
-				var  ProjectName= inputs[0].value;
-				var workTime= inputs[1].value;
+			      var selects =this.getElementsByTagName('select');
+				var  ProjectName= selects[0].value;
+				var workTime= inputs[0].value;
 				var Duration="测试";
 				array.push({
 						"Jobnumber":Jobnumber,
@@ -129,6 +155,7 @@
     	
 		  
 		   }
+		   
 		</style>
 	</head>
 	<body>
@@ -138,11 +165,17 @@
 			<div class="mui-input-row" id="content-addfater">
 				<div class="worktime-outtable" style="position: relative;">
 					<div class="content-padding"></div>
-					<input type="text" placeholder="输入项目名称" style="text-align: left;width: 50%;" id="ProjectName" />
+				
+					<select class="mui-btn mui-btn-block" id="ProjectName"  style="text-align: left; width:auto;left:0px;position: absolute; "  >
+					<option value="item-1">选择项目名称</option>
+					</select>
+					
+					<!--<input type="text" placeholder="输入项目名称" style="text-align: left;width: 50%;" id="ProjectName" />-->
+					
 					<!--<input type="text" placeholder="输入工作时间" onkeyup="this.value=this.value.replace(/\D/g,'')" onafterpaste="this.value=this.value.replace(/\D/g,'')" style="text-align: right;width: 50%;position: absolute; right:0px;"  id="WorkTime"/>-->
-					<div class="mui-numbox" data-numbox-step='1' data-numbox-min='0' data-numbox-max='8'>
+					<div class="mui-numbox" data-numbox-step='1' data-numbox-min='0' data-numbox-max='8' style="text-align: right;position: absolute; right:0px;" >
  					<button class="mui-btn mui-numbox-btn-minus" type="button"></button>
-  					 <input id="WorkTime" class="mui-numbox-input" type="number" />
+  					 <input id="WorkTime" class="mui-numbox-input" type="number"  />
   					 
   					<button class="mui-btn mui-numbox-btn-plus" type="button">小时</button>
 					</div>

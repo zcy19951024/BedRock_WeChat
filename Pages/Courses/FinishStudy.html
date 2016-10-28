@@ -1,0 +1,120 @@
+<!doctype html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<link href="../../css/mui.min.css" rel="stylesheet" />
+		<link href="../../css/Page/feedback.css" rel="stylesheet" />
+	</head>
+			
+	<body>
+		<script src="../../js/mui.min.js"></script>
+		<script type="text/javascript">
+			mui.init()
+			(function($){
+				
+				var thisURL = window.location.search;
+				var  parameter=thisURL.split('?')[1];  
+                var code= parameter.split('&')[0].split('=')[1];
+               	var Jobnumber =parameter.split('&')[1].split('=')[1];
+               	
+               	mui.getJSON('http://localhost/Bedrock_WeCath_WeiXin/api/StudyDetail/Get',{Jobnumber:Jobnumber,CourseCode:code},function(data){
+               		
+               		document.getElementById('content-outtable').innerHTML ="<a><h4>"+data.CourseCode+"</h4><p>发起人：<span>"+Jobnumber+"</span></p><p>学习开始时间：<span>"+data.StartStudyTime.substr(0,10)+"</span></p><p>预期完成时间：<span>"+data.ExpectFinishDate.substr(0,10)+"";
+               		
+               	});
+               	
+				var btnAprove=document.getElementById('approve');
+				btnAprove.addEventListener('tap',function(event){
+					
+					mui.ajax('http://localhost/Bedrock_WeCath_WeiXin/api/StudyDetail/Put/4',{
+			    	 		data:{
+			    	 			CourseCode:code,
+			    	 			Jobnumber:Jobnumber
+			    	 			},
+			    	 		dataType:'text',//服务器返回json格式数据
+							type:'post',//HTTP请求类型
+							timeout:5000,//超时时间设置为10秒；
+							headers:{'Content-Type':'application/json'},	              
+							success:function(data){
+								
+									mui.alert(data,"完成学习","确定",function () {
+										mui.back();
+									});
+
+							},
+							error:function(xhr,type,errorThrown){
+							//异常处理；
+							console.log(type);
+							mui.confirm(errorThrown);
+							}
+			    	 		
+			    	 	});
+				   
+				},false);
+				
+				var btnReject=document.getElementById('reject');
+				 btnReject.addEventListener('tap',function(event){
+				 	alert("");
+				 },false);
+			
+			})(mui);
+			
+		</script>
+		<header class="mui-bar mui-bar-nav">
+		    <h1 class="mui-title">完成学习申请</h1>
+		</header>
+		<div class="mui-content" id="content">
+	     <div class="mui-input-row" />
+	    	<div class="content-padding"></div>
+	    	
+	    	<div id="content-outtable" class="content-outtable" />
+	    		
+			    	<!--<h4>K2学习</h4>-->
+			    	<!--<p>发起人：<span>张三</span></p>
+			    	<p>课程名称：<span>K2学习</span></p>
+			    	
+	            	<p>学习开始时间：<span>李四</span></p>
+	            	<p>学习结束时间：<span>两周</span></p>-->
+	           
+        	</div>
+	    </div>
+	    <div class="mui-content-padded">
+				<div class="mui-inline">问题和意见</div>
+				<!--<a class="mui-pull-right mui-inline" href="#popover">
+					快捷输入
+					<span class="mui-icon mui-icon-arrowdown"></span>
+				</a>-->
+				<!--快捷输入具体内容-->
+				<!--<div id="popover" class="mui-popover">
+					<div class="mui-popover-arrow"></div>
+					<div class="mui-scroll-wrapper">
+						<div class="mui-scroll">
+							<ul class="mui-table-view">-->
+								<!--仅流应用环境下显示-->
+								<!--<li class="mui-table-view-cell stream">
+									<a href="#">桌面快捷方式创建失败</a>
+								</li>
+								<li class="mui-table-view-cell"><a href="#">界面显示错乱</a></li>
+								<li class="mui-table-view-cell"><a href="#">启动缓慢，卡出翔了</a></li>
+								<li class="mui-table-view-cell"><a href="#">偶发性崩溃</a></li>
+								<li class="mui-table-view-cell"><a href="#">UI无法直视，丑哭了</a></li>
+							</ul>
+						</div>
+					</div>-->
+
+				</div>
+			</div>
+			<div class="row mui-input-row">
+				<textarea id='question' style="height: 100px;" class="mui-input-clear question" placeholder="请详细描述你的问题和意见..."></textarea>
+			</div>
+	     <div class="mui-button-row">
+        <button id="approve" type="button" class="mui-btn mui-btn-primary" >确认完成</button>
+      	<button id="reject" type="button" class="mui-btn mui-btn-primary" >继续学习</button>
+        </div>
+	</div>	
+	</body>
+
+</html>

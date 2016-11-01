@@ -1,4 +1,4 @@
-window.WeChat={};
+﻿window.WeChat={};
 (function($, a) {
 	$.extend(true, a, {
 		init: function() {
@@ -6,7 +6,7 @@ window.WeChat={};
 		},
 		initConfig: function() {
 			//this.currentWebview = plus.webview.currentWebview();
-			this.APIServer='http://localhost/Bedrock_WeCath_WeiXin/api/';//api接口ip地址
+			this.APIServer='http://oa.bedrock.com.cn:8000/Bedrock_WeCath_WeiXin/api/';//api接口ip地址
 			this.HomeStartLoad=this.APIServer+'Index/GetSel?jobnumber=';//首页一开始就加载
 			this.EntryStartLoad=this.APIServer+'Entry/GetIndex?id=';//员工入职一开始就加载
 			this.EntrySubmit=this.APIServer+'Entry/PostEntry';//员工提交入职信息

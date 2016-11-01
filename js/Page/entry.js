@@ -1,7 +1,9 @@
-mui.init({});
+﻿mui.init({});
 //一开始就加载
 mui.ready(function() {
 	(function($) {
+
+		
 		WeChat.init();
 		var iid = location.search;
 		var id = iid.replace("?id=", "")
@@ -72,6 +74,8 @@ function submitinput() {
 	} else if(!reg.test(tel) || !regs.test(idcard)) {
 		alert("请输入正确的手机号或身份证号");
 	} else {
+               var openids = getCookie('openid');
+		alert(openids);
 		mui.ajax(WeChat.EntrySubmit, {
 			data: {
 				"CName": cname,
@@ -82,18 +86,20 @@ function submitinput() {
 				"NowAddress": nowaddress,
 				"MaritalStatus": maritalstatus,
 				"Education": education,
-				"Phone": tel
+				"Phone": tel,
+				"Jobnumber":openids
 			},
 			dataType: 'json', //服务器返回json格式数据
 			type: 'POST', //HTTP请求类型
 			contentType: 'application/json; charset=utf-8',
 			timeout: 10000, //超时时间设置为10秒；
 			success: function(data) {
-				var datas = eval('(' + JSON.stringify(data) + ')');
+				alert(data.Jobnumber);
+				//var datas = eval('(' + JSON.stringify(data) + ')');
 				//mui.alert("添加成功！");
 				mui.toast('添加成功!');
 				mui.openWindow({
-					url: '../../index.html?id=' + datas.Jobnumber,
+					url: '../../index.html?id=' + data.Jobnumber,//员工编号1，传入index
 				});
 			},
 			error: function(xhr, type, errorThrown) {
@@ -167,3 +173,13 @@ function Resubmit() {
 		});
 	}
 }
+function getCookie(name)
+{
+    var arr,reg=new RegExp("(^| )"+name+"=([^;]*)(;|$)");
+ 
+    if(arr=document.cookie.match(reg))
+ 
+        return unescape(arr[2]);
+    else
+        return null;
+} 

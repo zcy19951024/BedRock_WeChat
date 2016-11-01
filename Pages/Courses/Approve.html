@@ -1,4 +1,4 @@
-<!doctype html>
+﻿<!doctype html>
 <html>
 
 	<head>
@@ -17,7 +17,7 @@
 				var  parameter=thisURL.split('?')[1];  
                 var code= parameter.split('&')[0].split('=')[1];
                	var Jobnumber =parameter.split('&')[1].split('=')[1];
-					mui.getJSON('http://localhost/Bedrock_WeCath_WeiXin/api/StudyDetail/Get',{Jobnumber:Jobnumber,CourseCode:code},function(data){
+					mui.getJSON('http://oa.bedrock.com.cn:8000/Bedrock_WeCath_WeiXin/api/StudyDetail/Get',{Jobnumber:Jobnumber,CourseCode:code},function(data){
                		
                		document.getElementById('content-outtable').innerHTML ="<a><h4>"+data.CourseCode+"</h4><p>发起人：<span>"+Jobnumber+"</span></p><p>学习开始时间：<span>"+data.StartStudyTime.substr(0,10)+"</span></p><p>申请延后时间：<span>"+data.DeferTime+"";
                		document.getElementById('question').value =data.DeferReason;
@@ -26,7 +26,7 @@
 				var btnAprove=document.getElementById('approve');
 				btnAprove.addEventListener('tap',function(event){
 					
-					mui.ajax('http://localhost/Bedrock_WeCath_WeiXin/api/StudyDetail/Put/6',{
+					mui.ajax('http://oa.bedrock.com.cn:8000/Bedrock_WeCath_WeiXin/api/StudyDetail/Put/6',{
 			    	 		data:{
 			    	 			CourseCode:code,
 			    	 			Jobnumber:Jobnumber

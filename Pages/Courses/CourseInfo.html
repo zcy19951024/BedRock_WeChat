@@ -1,4 +1,4 @@
-<!doctype html>
+﻿<!doctype html>
 <html>
 
 	<head>
@@ -105,9 +105,9 @@
 				<div id="divOne" style="height: auto;">
 					
 					<ul class="mui-table-view" id="Content"  >
-						<!--<li class="mui-table-view-cell" >Item 1 <span class="mui-badge mui-badge-primary">14</span></li>
+						<!--<li class="mui-table-view-cell" ><h3>Item 1 </h3><span class="mui-badge mui-badge-primary">课程内容1</span></li>
 		            	<li class="mui-table-view-cell">Item 2 <span class="mui-badge mui-badge-success">1</span></li>
-		            	<li class="mui-table-view-cell">Item 3 <span class="mui-badge">5</span></li>
+		            	<li class="mui-table-view-cell">Item 3 <span class="mui-badge">5</span></li>-->
 	    				<!--<li class="mui-table-view-cell">
 	    					<div class="mui-input-row mui-checkbox mui-left" >  
 	                			<div class="mui-media-body" style="margin-left: 15%;">
@@ -138,13 +138,8 @@
 					</div>
 				    <div id="divButton"  class="mui-table-view" style="text-align: center;height: 55px;">
 				    	<button id="btnFinish"  class="mui-btn mui-btn-primary" style="width: auto;margin-top: 10px;background-color:#66CCFF" onclick="finishStudy()">完成学习</button>
-				    <!--</div>
-					<div id="divSuspend"  class="mui-table-view" style="text-align: center;height: 55px;display: none;">-->
-						
+				   
 						<button id="btnSuspend" class="mui-btn mui-btn-primary" style="width: auto;margin-top: 10px;background-color:#66CCFF" onclick="StopStudy()">暂停学习</button>
-					
-					<!--</div>
-					<div id="divDelay"  class="mui-table-view" style="text-align: center;height: 55px;display: none;">-->
 					
 						<button id="btnDelayed" class="mui-btn mui-btn-primary" style="width: auto;margin-top: 10px;background-color:#66CCFF" onclick="DelayStudy()">延后学习</button>
 					
@@ -159,7 +154,7 @@
 					</span>-->
 				</div>
 				<div id="divThree" style="display: none;">
-					K2 blackpearl是基于微软.net技术平台研发的BPM产品，是全球第一款基于微软WWF技术构建的遵循WFMC标准的.net平台BPM产品。<br>
+					&nbsp;&nbsp;&nbsp;&nbsp;K2 blackpearl是基于微软.net技术平台研发的BPM产品，是全球第一款基于微软WWF技术构建的遵循WFMC标准的.net平台BPM产品。<br>
 				</div>
 				
 			</div>
@@ -182,6 +177,7 @@
 				}
 		
 			mui.ready(function(){
+				var apiUrl="http://oa.bedrock.com.cn:8000/Bedrock_WeCath_WeiXin";
 			var h = window.innerHeight || document.documentElement.clientHeight || document.body.clientHeight;
 			var h1=document.getElementById('content').clientHeight;
 			var h2=document.getElementById('menu').clientHeight;
@@ -198,28 +194,28 @@
                   var Jobnumber =parameter.split('&')[1].split('=')[1];
                  
                   //加载课程详情
-                mui.getJSON('http://localhost/Bedrock_WeCath_WeiXin/api/CourseContent/Get',{CourseCode:CourseCode},function(data){
-                	
-                	document.getElementById('divTwo').innerHTML = "<span>"+data.CourseDesc+"</span>";
+                mui.getJSON(apiUrl+'/api/CourseContent/Get',{CourseCode:CourseCode},function(data){
+                	 
+                	document.getElementById('divTwo').innerHTML = "<span style='font-size: 18px;'>&nbsp;&nbsp;&nbsp;&nbsp;"+data.CourseDesc+"</span>";
                 	document.getElementById('backImage').setAttribute("style","background-image: url("+data.Courseimages+");background-repeat: repeat; height: 260px;");
                     document.getElementById('content-detail').innerHTML ="<h4>"+data.CourseTitle+"</h4><p>负责人：<span>"+data.CoursePrincipal+"</span></p><p>项目经理：<span>"+data.CoursePM+"</span></p><p>建议学习周期：<span>"+data.CourseFinishTime+"天</span></p>";
                 });
                 var i=1;
                 //加载课程内容
-                mui.getJSON('http://localhost/Bedrock_WeCath_WeiXin/api/CourseContent/Get/1',{CourseCode:CourseCode},function(data){
+                mui.getJSON(apiUrl+'/api/CourseContent/Get/1',{CourseCode:CourseCode},function(data){
                 	var Content =data.Content.split('/');
                 	mui.each(Content,function(index,item){
-                		
-                		document.getElementById('Content').innerHTML +="<li class='mui-table-view-cell' style='font-size: 22px;'>"+item+"</li>";
+                		 
+                		document.getElementById('Content').innerHTML +="<li class='mui-table-view-cell' style='margin-left: 5%;'><h4>"+item+"</h4><span class='mui-badge mui-badge-primary'>课程内容"+i+"</span></li>";
                 		i++;
                 		
                 	});
                 	
                 });
                 //获取学习状态
-              mui.getJSON('http://localhost/Bedrock_WeCath_WeiXin/api/StudyDetail/Get',{Jobnumber:Jobnumber.toString(),CourseCode:CourseCode.toString()},function(data){
+              mui.getJSON(apiUrl+'/api/StudyDetail/Get',{Jobnumber:Jobnumber.toString(),CourseCode:CourseCode.toString()},function(data){
               	
-              
+                
               	//根据课程学习状态显示和隐藏相应按钮
               	switch(data.Studystate)
               	{
@@ -260,7 +256,6 @@
               		
               	}
 
-
               });
 			
 			});
@@ -277,23 +272,31 @@
  
 			})
 			mui(".mui-segmented-control").on('tap','#btnTwo',function(){
+			var h = window.innerHeight || document.documentElement.clientHeight || document.body.clientHeight;
+			var h1=document.getElementById('content').clientHeight;
+			var h2=document.getElementById('menu').clientHeight;
+			var h3=h-h1-h2;
 				console.log("divTwo");
   					var divOne=document.getElementById("divOne");
   					var divTwo=document.getElementById("divTwo");
   					var divThree=document.getElementById("divThree");
   					divOne.setAttribute("style","display: none;");
-  					divTwo.setAttribute("style","display:  block;height: auto;");
+  					divTwo.setAttribute("style","display:  block;height: "+h3+"px;");
   					divThree.setAttribute("style","display: none;");
  
 			})
 			mui(".mui-segmented-control").on('tap','#btnThree',function(){
+			var h = window.innerHeight || document.documentElement.clientHeight || document.body.clientHeight;
+			var h1=document.getElementById('content').clientHeight;
+			var h2=document.getElementById('menu').clientHeight;
+			var h3=h-h1-h2;
 				console.log("divThree");
   					var divOne=document.getElementById("divOne");
   					var divTwo=document.getElementById("divTwo");
   					var divThree=document.getElementById("divThree");
   					divOne.setAttribute("style","display: none;");
   					divTwo.setAttribute("style","display: none;");
-  					divThree.setAttribute("style","display: block;height: auto;");
+  					divThree.setAttribute("style","display: block;height: "+h3+"px;");
  				 
 			})
 			//开始学习
@@ -303,7 +306,7 @@
 				var  parameter=thisURL.split('?')[1];  
                 var code= parameter.split('&')[0].split('=')[1];
                 var Jobnumber =parameter.split('&')[1].split('=')[1];
-                mui.ajax('http://localhost/Bedrock_WeCath_WeiXin/api/StudyDetail/Put/1',{
+                mui.ajax('http://oa.bedrock.com.cn:8000/Bedrock_WeCath_WeiXin/api/StudyDetail/Put/1',{
 			    	 		data:{
 			    	 			CourseCode:code,
 			    	 			Jobnumber:Jobnumber
@@ -314,8 +317,12 @@
 							headers:{'Content-Type':'application/json'},	              
 							success:function(data){
 									mui.alert(data,"开始学习","确定",function () {
-									
-										mui.back();
+									mui.openWindow({
+											url: 'AddCourse-content.html?id=' + Jobnumber,										waiting: {
+											autoShow: true, //自动显示等待框，默认为true  
+											title: '正在加载...', //等待对话框上显示的提示内容  
+											}
+										})
 									});
 //	 					   mui.openWindow({
 //                       		 url: 'AddCourse.html', 
@@ -371,7 +378,7 @@
 				var  parameter=thisURL.split('?')[1];  
                 var code= parameter.split('&')[0].split('=')[1];
                 var Jobnumber =parameter.split('&')[1].split('=')[1];
-                mui.ajax('http://localhost/Bedrock_WeCath_WeiXin/api/StudyDetail/Put/5',{
+                mui.ajax('http://oa.bedrock.com.cn:8000/Bedrock_WeCath_WeiXin/api/StudyDetail/Put/5',{
 			    	 		data:{
 			    	 			CourseCode:code,
 			    	 			Jobnumber:Jobnumber

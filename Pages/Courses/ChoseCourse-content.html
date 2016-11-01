@@ -1,4 +1,4 @@
-<!doctype html>
+﻿<!doctype html>
 <html>
 	<head>
 		<meta charset="UTF-8">
@@ -59,14 +59,14 @@
 				var  Code =thisURL.split('?')[1];  
                 var Jobnumber= Code.split("=")[1]; 
             
-				mui.getJSON('http://localhost/Bedrock_WeCath_WeiXin/api/StudyCourse/Get',{Jobnumber:Jobnumber},function(data){
+				mui.getJSON('http://oa.bedrock.com.cn:8000/Bedrock_WeCath_WeiXin/api/StudyCourse/Get',{Jobnumber:Jobnumber},function(data){
 					if(data ==""){
 						
 						mui.alert("没有新的课程！");
 					}
 					 mui.each(data,function(index,item){
 					 	
-					 	document.getElementById("content").innerHTML +="<div class='mui-input-row mui-checkbox mui-left'> <div class='content-padding'></div><div class='content-outtable'><h4>"+item.CourseTitle+"</h4><p>负责人：<span>"+item.CoursePrincipal+"</span></p><p>项目经理：<span>"+item.CoursePM+"</span></p><p>建议学习周期：<span>"+item.CourseFinishTime+"周</span></p><input name='checkbox'  type='checkbox'  style='margin-top: 6%;margin-left: 20%'> <input type='text' value="+item.CourseCode+" hidden='hidden' /></div> </div>";
+					 	document.getElementById("content").innerHTML +="<div class='mui-input-row mui-checkbox mui-left'> <div class='content-padding'></div><div class='content-outtable'><h4>"+item.CourseTitle+"</h4><p>负责人：<span>"+item.CoursePrincipal+"</span></p><p>项目经理：<span>"+item.CoursePM+"</span></p><p>建议学习周期：<span>"+item.CourseFinishTime+"天</span></p><input name='checkbox'  type='checkbox'  style='margin-top: 6%;margin-left: 20%'> <input type='text' value="+item.CourseCode+" hidden='hidden' /></div> </div>";
 
 					 });
 					 
@@ -100,7 +100,7 @@
 			    	mui.alert("请选择课程！");
 			    	return;
 			    };
-			    mui.ajax('http://localhost/Bedrock_WeCath_WeiXin/api/StudyDetail/Post',{
+			    mui.ajax('http://oa.bedrock.com.cn:8000/Bedrock_WeCath_WeiXin/api/StudyDetail/Post',{
 			    	 		data:array,
 			    	 		dataType:'text',//服务器返回json格式数据
 							type:'post',//HTTP请求类型

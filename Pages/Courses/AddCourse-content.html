@@ -1,5 +1,4 @@
-<!doctype html>
-<html>
+﻿<html>
 <head>
 	<meta charset="UTF-8">
 	<title></title>
@@ -49,7 +48,7 @@
        	    
        		
         	
-        	mui.getJSON('http://localhost/Bedrock_WeCath_WeiXin/api/StudyCourse/Get/2',{Jobnumber:Jobnumber},function(data){
+        	mui.getJSON('http://oa.bedrock.com.cn:8000/Bedrock_WeCath_WeiXin/api/StudyCourse/Get/2',{Jobnumber:Jobnumber},function(data){
 		         mui.each(data,function(index,item){
 		         	//根据不同状态显示不同内容
 		         	switch(item[0].studyState)

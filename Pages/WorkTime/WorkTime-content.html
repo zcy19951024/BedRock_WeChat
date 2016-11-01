@@ -1,4 +1,4 @@
-<!doctype html>
+﻿<!doctype html>
 <html>
 
 	<head>
@@ -10,18 +10,45 @@
 		<script type="text/javascript">
 			mui.init();
 			mui.ready(function(){
-				var thisURL = window.location.search;
-				var  Code =thisURL.split('?')[1];  
-                var Jobnumber= Code.split("=")[1]; 
-				document.getElementById('history').setAttribute("href","historytime.html?Jobnumber="+Jobnumber);
+				(function($) {
+					
+					
+			
+			 var code = getQueryString('code');
+ 	   		 var openid =getCookie('openid');
+              
+  			if (!openid) { 				
+  			  if (!code) { 	
+  			  	 
+      				location.replace('https://open.weixin.qq.com/connect/oauth2/authorize?appid=wx89e8fe8e17f057f1&redirect_uri=http%3a%2f%2foa.bedrock.com.cn%3a8000%2fBedRock_WeChat%2fPages%2fWorkTime%2fWorkTime-content.html&response_type=code&scope=snsapi_base#wechat_redirect');
+   					} else {  
+   						
+   					 	mui.getJSON('http://ayansw.vicp.cc/BRC.Wechat.Enterprise/api/user?code='+code+'&agentid=16',function(data){
+							//获得服务器响应
+							 //var datas = JSON.stringify(data);
+							 //alert(datas);
+							var openid =data.openid;
+							 setCookie('openid',openid);
+							 alert(data.openid);
+						});   					 	
+    					}
+  					} else {
+  						  					 //config();
+  				}
+//				var thisURL = window.location.search;
+//				var  Code =thisURL.split('?')[1];  
+//              var Jobnumber= Code.split("=")[1]; 
+   
+
+				document.getElementById('history').setAttribute("href","historytime.html?Jobnumber="+openid);
 				var obj =document.getElementById('ProjectName');
-				mui.getJSON('http://localhost/Bedrock_WeCath_WeiXin/api/Project/Get',function(data){
-					mui.each(data,function(index,item){
-						
-						 obj.options.add(new Option(item.projectName,item.projectName)); //这个兼容IE与firefox  
+				mui.getJSON('http://oa.bedrock.com.cn:8000/Bedrock_WeCath_WeiXin/api/Project/Get',function(data){
+										mui.each(data,function(index,item){
+												 obj.options.add(new Option(item.projectName,item.projectName)); //这个兼容IE与firefox  
 							});
 						});
 						
+					})(mui);		
 			});
 			
 			
@@ -31,7 +58,7 @@
 			var html = document.getElementById("content-addfater").innerHTML;
 			//追加的代码加到一起插入div中
 			
-			document.getElementById("content-addfater").innerHTML +=  "<div class='worktime-outtable' style='position: relative;'><div class='content-padding'></div><select class='mui-btn mui-btn-block' id='ProjectName'  style='text-align: left; width:auto;left:0px;position: absolute;'><option value='item-1'>选择项目名称</option></select><div class='mui-numbox' data-numbox-step='1' data-numbox-min='0' data-numbox-max='8'><button class='mui-btn mui-numbox-btn-minus' type='button'></button><input id='WorkTime' class='mui-numbox-input' type='number' /><button class='mui-btn mui-numbox-btn-plus' type='button'>小时</button></div></div>"	
+			document.getElementById("content-addfater").innerHTML +=  "<div class='worktime-outtable' style='position: relative;'><div class='content-padding'></div><select class='mui-btn mui-btn-block' id='ProjectName'  style='text-align: left; width:auto;left:0px;position: absolute;'><option value='item-1'>选择项目名称</option></select> <input type='text' placeholder='输入工作时间' onkeyup='this.value=this.value.replace(/\D/g,'')' onafterpaste='this.value=this.value.replace(/\D/g,'')' style='text-align: right;width: 50%;position: absolute; right:0px;'  id='WorkTime'/></div>"	
 				
 				mui("#content-addfater .worktime-outtable").each(function(){
 				 
@@ -39,7 +66,7 @@
 				    var count= obj[0].options.length;
 				    if(count <=1){
 				    	
-				        mui.getJSON('http://localhost/Bedrock_WeCath_WeiXin/api/Project/Get',function(data){
+				        mui.getJSON('http://oa.bedrock.com.cn:8000/Bedrock_WeCath_WeiXin/api/Project/Get',function(data){
 						mui.each(data,function(index,item){
 						
 						 obj[0].options.add(new Option(item.projectName,item.projectName)); //这个兼容IE与firefox  
@@ -83,9 +110,7 @@
 				     return;
 				}
 				var array=[];
-				var thisURL = window.location.search;
-				var  Code =thisURL.split('?')[1];  
-                var Jobnumber= Code.split("=")[1]; 
+				var openid =getCookie('openid');
 				mui("#content-addfater .worktime-outtable").each(function(){
 			    var inputs =this.getElementsByTagName("input");
 			      var selects =this.getElementsByTagName('select');
@@ -93,13 +118,13 @@
 				var workTime= inputs[0].value;
 				var Duration="测试";
 				array.push({
-						"Jobnumber":Jobnumber,
+						"Jobnumber":openid,
 						 "WorkDate":workTime,
 						 "ProjectName":ProjectName,
 						 "Duration":Duration,
 					});
 				});
-				mui.ajax('http://localhost/Bedrock_WeCath_WeiXin/api/work/Post',{
+				mui.ajax('http://oa.bedrock.com.cn:8000/Bedrock_WeCath_WeiXin/api/work/Post',{
 		            //JSON.stringify(array)
 					data:array,
 					dataType:'text',
@@ -121,6 +146,28 @@
 					
 				});
 			}
+			function getQueryString(queryname) {
+  var reg = new RegExp(`(^|&)${queryname}=([^&]*)(&|$)`);
+  var r = window.location.search.substr(1).match(reg);
+  if (r != null) return unescape(r[2]); return null;
+}
+			function setCookie(name,value)
+{
+    var Days = 30;
+    var exp = new Date();
+    exp.setTime(exp.getTime() + Days*24*60*60*1000);
+    document.cookie = name + "="+ escape (value) + ";expires=" + exp.toGMTString()+";path=/";
+} 
+function getCookie(name)
+{
+    var arr,reg=new RegExp("(^| )"+name+"=([^;]*)(;|$)");
+ 
+    if(arr=document.cookie.match(reg))
+ 
+        return unescape(arr[2]);
+    else
+        return null;
+} 
 		</script>
 		<style>
 			.worktime-outtable{
@@ -136,19 +183,19 @@
 			}
 			
 		   .Enter{
-		    	
+		    
     	display: inline-block;
     	overflow: hidden;
     	width: auto;
     	text-align: right;
     	text-overflow: ellipsis;
-    	font-size: 18px;
+    	font-size: 16px;
     	font-weight: 500;
    		margin-top: 10px;
     	display: block;
     	padding: 0;
     	white-space: nowrap;
-    	color: #000000;
+    	color: #007AFF;
     	/*margin-left: 80%;*/
     	right: 15px;
     	
@@ -172,13 +219,14 @@
 					
 					<!--<input type="text" placeholder="输入项目名称" style="text-align: left;width: 50%;" id="ProjectName" />-->
 					
-					<!--<input type="text" placeholder="输入工作时间" onkeyup="this.value=this.value.replace(/\D/g,'')" onafterpaste="this.value=this.value.replace(/\D/g,'')" style="text-align: right;width: 50%;position: absolute; right:0px;"  id="WorkTime"/>-->
-					<div class="mui-numbox" data-numbox-step='1' data-numbox-min='0' data-numbox-max='8' style="text-align: right;position: absolute; right:0px;" >
+				    <input type="text" placeholder="输入工作时间" onkeyup="this.value=this.value.replace(/\D/g,'')" onafterpaste="this.value=this.value.replace(/\D/g,'')" style="text-align: right;width: 50%;position: absolute; right:0px;"  id="WorkTime"/>
+					<!--<div class="mui-numbox" data-numbox-step='1' data-numbox-min='0' data-numbox-max='8' style="text-align: right;position: absolute; right:0px;" >
  					<button class="mui-btn mui-numbox-btn-minus" type="button"></button>
   					 <input id="WorkTime" class="mui-numbox-input" type="number"  />
   					 
   					<button class="mui-btn mui-numbox-btn-plus" type="button">小时</button>
-					</div>
+					</div>-->
+					
 				</div>	
 
 			</div>
@@ -188,8 +236,8 @@
 			</div>	
 			<div class="content-padding"></div>
 		<div id="fater-position">
-			<button type="button" class="mui-btn mui-btn-blue mui-btn-block" style="background-color:#EEEEF3;border-color: #66CCFF;color: #66CCFF;position: absolute; width: 45%;" onclick="removes()">删除</button>
-			<button type="button" class="mui-btn mui-btn-blue mui-btn-block" style="background-color:#66CCFF;border-color: #66CCFF;position: absolute;right: 0px;width:45%" onclick="addWork()">提交</button>
+			<button type="button" class="mui-btn mui-btn-blue mui-btn-block" style="background-color:#EEEEF3;border-color: #66CCFF;color: #66CCFF;position: absolute; left:10px;width: 40%;" onclick="removes()">删除</button>
+			<button type="button" class="mui-btn mui-btn-blue mui-btn-block" style="background-color:#66CCFF;border-color: #66CCFF;position: absolute;right: 10px;width:40%" onclick="addWork()">提交</button>
 		</div>
 		</div> 
 

@@ -1,4 +1,4 @@
-<!doctype html>
+﻿<!doctype html>
 <html>
 
 	<head>
@@ -70,7 +70,7 @@
 					var e =document.getElementById('resultEnd').value;
 					var html=" ";
 					 
-					mui.getJSON('http://localhost/Bedrock_WeCath_WeiXin/api/work/Get/'+Jobnumber,{startDate:s,endDate:e},function(data){
+					mui.getJSON('http://oa.bedrock.com.cn:8000/Bedrock_WeCath_WeiXin/api/work/Get/'+Jobnumber,{startDate:s,endDate:e},function(data){
 				        
 				    if(data=="")
 					 	{
